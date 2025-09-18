@@ -1,11 +1,15 @@
 /* ===== APP COMPONENT SPECIFIC STYLES ===== */
 html {
-  scroll-behavior: smooth; /* This enables smooth scrolling */
+  scroll-behavior: smooth;
+}
+
+body {
+  scroll-behavior: smooth;
 }
 
 html, body {
   background-color: #000000;
-  /* Hide scrollbars but keep scrolling functionality */
+  /* Allow normal scrolling */
   overflow-x: hidden;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
@@ -22,20 +26,24 @@ body::-webkit-scrollbar,
 
 .App {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  display: block;
 }
 
 .App-header {
-  background-color: #000000;
+  background-color: transparent;
   padding: 2rem;
   text-align: center;
-  border-bottom: 1px solid #000000;
+  border-bottom: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 .App-main {
   background-color: #000000;
-  flex: 1;
   padding: 2rem 0;
 }
 
@@ -44,18 +52,17 @@ body::-webkit-scrollbar,
   padding: 1rem;
   text-align: center;
   border-top: 1px solid #000000;
-  margin-top: auto;
 }
 
 .hero-section {
-  min-height: 100vh;
+  min-height: 120vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .about-section {
-  min-height: 100vh;
+  min-height: 120vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,13 +93,28 @@ body::-webkit-scrollbar,
   text-align: center;
 }
 
+/* ===== STICKY LOGO ===== */
+.sticky-logo-fixed {
+  position: fixed;
+  top: 1rem;
+  left: 2rem;
+  z-index: 1001;
+}
+
+.sticky-logo-fixed img {
+  height: 60px;
+  width: auto;
+}
+
 /* ===== NAVBAR STYLES ===== */
 .App-header nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   width: 100%;
 }
+
+
 
 .nav-logo {
   height: 40px;
@@ -105,6 +127,12 @@ body::-webkit-scrollbar,
   gap: 2rem;
   margin: 0;
   padding: 0;
+  transform: translateY(0);
+  transition: transform 0.5s ease;
+}
+
+.nav-links.hidden {
+  transform: translateY(-100px) !important;
 }
 
 .nav-links li {
