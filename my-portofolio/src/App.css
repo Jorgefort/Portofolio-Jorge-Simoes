@@ -1,38 +1,125 @@
+/* ===== APP COMPONENT SPECIFIC STYLES ===== */
+body {
+  background-color: #000000;
+}
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.App-header {
+  background-color: #000000;
+  padding: 2rem;
+  text-align: center;
+  border-bottom: 1px solid #000000;
+}
+
+.App-main {
+  background-color: #000000;
+  flex: 1;
+  padding: 2rem 0;
+}
+
+.App-footer {
+  background-color: #000000;
+  padding: 1rem;
+  text-align: center;
+  border-top: 1px solid #000000;
+  margin-top: auto;
+}
+
+.hero-section {
+  min-height: 100vh;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.about-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.projects-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.favprojects-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image styling */
+.hero-section img {
+  width: 1920px;
+  height: 1080px;
+}
+
+.hero-section {
+  flex-direction: column;
+  text-align: center;
+}
+
+/* ===== NAVBAR STYLES ===== */
+.App-header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.nav-logo {
+  height: 40px;
+  width: auto;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+.nav-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 0.5rem 0;
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+/* Animated underline effect */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #ffffff;
+  transition: width 0.4s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
 }
