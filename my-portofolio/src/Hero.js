@@ -6,6 +6,7 @@ function Hero() {
       <img src={whiteblackImg} alt='blackhole' />
       <h1>Welcome to My Portfolio</h1>
       <p>I'm a Developer</p>
+      
     </section>
   );
 }
