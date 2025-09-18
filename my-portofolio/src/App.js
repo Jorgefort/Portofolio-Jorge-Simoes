@@ -10,7 +10,6 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      
       <main className="App-main">
         <Hero />
         <About />

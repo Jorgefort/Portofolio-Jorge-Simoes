@@ -1,5 +1,9 @@
 /* ===== APP COMPONENT SPECIFIC STYLES ===== */
-body {
+html {
+  scroll-behavior: smooth; /* This enables smooth scrolling */
+}
+
+html, body {
   background-color: #000000;
   /* Hide scrollbars but keep scrolling functionality */
   overflow-x: hidden;
@@ -8,8 +12,12 @@ body {
 }
 
 /* Hide scrollbar for webkit browsers (Chrome, Safari, Edge) */
-body::-webkit-scrollbar {
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
   display: none;
+  width: 0px;
+  background: transparent;
 }
 
 .App {
