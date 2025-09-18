@@ -1,7 +1,17 @@
 /* ===== APP COMPONENT SPECIFIC STYLES ===== */
 body {
   background-color: #000000;
+  /* Hide scrollbars but keep scrolling functionality */
+  overflow-x: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
+
+/* Hide scrollbar for webkit browsers (Chrome, Safari, Edge) */
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .App {
   min-height: 100vh;
   display: flex;
