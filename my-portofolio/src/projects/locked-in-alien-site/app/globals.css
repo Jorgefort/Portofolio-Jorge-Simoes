@@ -1,0 +1,432 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Alien theme - pure black and white with subtle variations */
+  --background: oklch(0.05 0 0); /* Deep black */
+  --foreground: oklch(0.98 0 0); /* Pure white */
+  --card: oklch(0.08 0 0); /* Slightly lighter black */
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.08 0 0);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.98 0 0); /* White primary */
+  --primary-foreground: oklch(0.05 0 0); /* Black text on white */
+  --secondary: oklch(0.15 0 0); /* Dark gray */
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.12 0 0); /* Muted dark */
+  --muted-foreground: oklch(0.7 0 0); /* Light gray */
+  --accent: oklch(0.15 0 0);
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.5 0 0); /* Gray destructive */
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.2 0 0); /* Dark border */
+  --input: oklch(0.15 0 0);
+  --ring: oklch(0.4 0 0); /* Focus ring */
+  --chart-1: oklch(0.8 0 0);
+  --chart-2: oklch(0.6 0 0);
+  --chart-3: oklch(0.4 0 0);
+  --chart-4: oklch(0.7 0 0);
+  --chart-5: oklch(0.5 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.08 0 0);
+  --sidebar-foreground: oklch(0.98 0 0);
+  --sidebar-primary: oklch(0.98 0 0);
+  --sidebar-primary-foreground: oklch(0.05 0 0);
+  --sidebar-accent: oklch(0.15 0 0);
+  --sidebar-accent-foreground: oklch(0.98 0 0);
+  --sidebar-border: oklch(0.2 0 0);
+  --sidebar-ring: oklch(0.4 0 0);
+}
+
+.dark {
+  /* Dark mode - same as light for alien theme */
+  --background: oklch(0.05 0 0);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.08 0 0);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.08 0 0);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.98 0 0);
+  --primary-foreground: oklch(0.05 0 0);
+  --secondary: oklch(0.15 0 0);
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.12 0 0);
+  --muted-foreground: oklch(0.7 0 0);
+  --accent: oklch(0.15 0 0);
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.5 0 0);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.2 0 0);
+  --input: oklch(0.15 0 0);
+  --ring: oklch(0.4 0 0);
+  --chart-1: oklch(0.8 0 0);
+  --chart-2: oklch(0.6 0 0);
+  --chart-3: oklch(0.4 0 0);
+  --chart-4: oklch(0.7 0 0);
+  --chart-5: oklch(0.5 0 0);
+  --sidebar: oklch(0.08 0 0);
+  --sidebar-foreground: oklch(0.98 0 0);
+  --sidebar-primary: oklch(0.98 0 0);
+  --sidebar-primary-foreground: oklch(0.05 0 0);
+  --sidebar-accent: oklch(0.15 0 0);
+  --sidebar-accent-foreground: oklch(0.98 0 0);
+  --sidebar-border: oklch(0.2 0 0);
+  --sidebar-ring: oklch(0.4 0 0);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom alien-themed animations */
+@keyframes alienGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes alienPulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes alienFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glitchText {
+  0% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  10% {
+    transform: translate(-2px, -1px);
+    filter: hue-rotate(90deg);
+  }
+  20% {
+    transform: translate(2px, 1px);
+    filter: hue-rotate(180deg);
+  }
+  30% {
+    transform: translate(-1px, 2px);
+    filter: hue-rotate(270deg);
+  }
+  40% {
+    transform: translate(1px, -2px);
+    filter: hue-rotate(360deg);
+  }
+  50% {
+    transform: translate(-2px, 1px);
+  }
+  60% {
+    transform: translate(2px, -1px);
+  }
+  70% {
+    transform: translate(-1px, -2px);
+  }
+  80% {
+    transform: translate(1px, 2px);
+  }
+  90% {
+    transform: translate(-2px, -1px);
+  }
+  100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+}
+
+@keyframes alienScan {
+  0% {
+    top: -2px;
+    opacity: 1;
+  }
+  100% {
+    top: 100vh;
+    opacity: 0;
+  }
+}
+
+@keyframes alienScanSlow {
+  0% {
+    top: -2px;
+    opacity: 0.5;
+  }
+  100% {
+    top: 100vh;
+    opacity: 0;
+  }
+}
+
+@keyframes alienOrbit {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes alienOrbitReverse {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes dataStream {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes borderSweep {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.alien-glow {
+  animation: alienGlow 3s ease-in-out infinite;
+}
+
+.alien-pulse {
+  animation: alienPulse 2s ease-in-out infinite;
+}
+
+.alien-float {
+  animation: alienFloat 4s ease-in-out infinite;
+}
+
+/* Alien text effects */
+.alien-text {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.1em;
+}
+
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text:hover {
+  animation: glitchText 0.5s ease-in-out;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.glitch-text:hover::before {
+  animation: glitchText 0.5s ease-in-out;
+  color: rgba(255, 255, 255, 0.8);
+  z-index: -1;
+}
+
+.glitch-text:hover::after {
+  animation: glitchText 0.5s ease-in-out reverse;
+  color: rgba(255, 255, 255, 0.6);
+  z-index: -2;
+}
+
+.alien-scan {
+  animation: alienScan 3s linear infinite;
+}
+
+.alien-scan-slow {
+  animation: alienScanSlow 5s linear infinite;
+  animation-delay: 1.5s;
+}
+
+.alien-orbit {
+  animation: alienOrbit 20s linear infinite;
+}
+
+.alien-orbit-reverse {
+  animation: alienOrbitReverse 15s linear infinite;
+}
+
+/* Enhanced alien matrix effect */
+.alien-matrix {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.1;
+}
+
+/* Alien terminal styling */
+.alien-terminal {
+  font-family: "Courier New", monospace;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1), inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+/* Enhanced hover effects */
+.alien-hover-glow:hover {
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3), 0 0 60px rgba(255, 255, 255, 0.1);
+  transform: scale(1.02);
+  transition: all 0.3s ease;
+}
+
+/* Alien data stream effect */
+.data-stream {
+  animation: dataStream 4s linear infinite;
+}
+
+/* Enhanced alien border with animation */
+.alien-border-animated {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.alien-border-animated::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: borderSweep 2s linear infinite;
+}
+
+/* Alien consciousness indicator */
+.consciousness-indicator {
+  position: relative;
+}
+
+.consciousness-indicator::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -20px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  animation: alienPulse 1s ease-in-out infinite;
+}
+
+.alien-border {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+}
+
+/* Glitch effect for alien theme */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+.glitch:hover {
+  animation: glitch 0.3s ease-in-out;
+}
