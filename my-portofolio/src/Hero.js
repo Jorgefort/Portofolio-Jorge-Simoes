@@ -1,11 +1,24 @@
 import whiteblackImg from './whiteblack.jpg';
 
 function Hero() {
+  const scrollToAbout = () => {
+    document.getElementById('about').scrollIntoView({ 
+      behavior: 'smooth' 
+    });
+  };
+
   return (
     <section id="hero" className="hero-section">
+      {/* Navigation links positioned in corner */}
+      <div className="hero-nav-links">
+        <ul className='nav-links'>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#favprojects">Contact</a></li>
+        </ul>
+      </div>
+      
       <img src={whiteblackImg} alt='blackhole' />
-      <h1>Welcome to My Portfolio</h1>
-      <p>I'm a Developer</p>
     </section>
   );
 }
