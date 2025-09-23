@@ -83,9 +83,10 @@ body::-webkit-scrollbar,
 
 .about-content {
   display: flex;
-  align-items: center;
-  gap: 3rem;
-  max-width: 1200px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 5rem;
+  max-width: 1920px;
   width: 100%;
 }
 
@@ -94,12 +95,16 @@ body::-webkit-scrollbar,
   height: 816px;
   background-color: transparent;
   border: 2px solid #ffffff;
+  border-radius: 20px;
   flex-shrink: 0;
+}
+
+.about-center-placeholder {
+
 }
 
 .about-text {
   color: #ffffff;
-  flex: 1;
 }
 
 .about-text h2 {

@@ -4,7 +4,7 @@ import Loading from './Loading';
 import Navbar from './Navbar';
 import Hero from './Hero';
 import About from './About';
-import Projects from './Projects';
+import Projects from './Projects';  
 import FavoriteProject from './FavoriteProject';
 import Footer from './Footer';
 
@@ -16,7 +16,7 @@ function App() {
   };
 
   if (isLoading) {
-    return <Loading onLoadingComplete={handleLoadingComplete} />;
+    /*return <Loading onLoadingComplete={handleLoadingComplete} />;*/
   }
 
   return (
