@@ -9,7 +9,6 @@ function Hero() {
 
   return (
     <section id="hero" className="hero-section">
-      {/* Navigation links positioned in corner */}
       <div className="hero-nav-links">
         <ul className='nav-links'>
           <li><a href="#about">About</a></li>
