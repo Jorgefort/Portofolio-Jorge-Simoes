@@ -1,4 +1,4 @@
-import whiteblackImg from './whiteblack.jpg';
+import heromImg from './herom.jpg';
 
 function Hero() {
   const scrollToAbout = () => {
@@ -17,7 +17,7 @@ function Hero() {
         </ul>
       </div>
       
-      <img src={whiteblackImg} alt='blackhole' />
+      <img src={heromImg} alt='blackhole' />
     </section>
   );
 }
