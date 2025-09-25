@@ -64,6 +64,18 @@ body::-webkit-scrollbar,
   text-align: center;
 }
 
+.hero-section img {
+  width: 1920px;
+  height: 1080px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  object-fit: cover;
+  transform-origin: center center;
+  will-change: transform, border-radius;
+}
+
 .hero-nav-links {
   position: absolute;
   top: 2rem;
@@ -100,7 +112,8 @@ body::-webkit-scrollbar,
 }
 
 .about-center-placeholder {
-
+  border: 2px solid #ffffff;
+  border-radius: 20px;
 }
 
 .about-text {
@@ -133,16 +146,6 @@ body::-webkit-scrollbar,
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-}
-
-.hero-section img {
-  width: 1920px;
-  height: 1080px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  object-fit: cover;
 }
 
 .hero-section h1, 
