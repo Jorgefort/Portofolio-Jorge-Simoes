@@ -1,47 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import logoImg from './Logo.png';
 
 function Loading({ onLoadingComplete }) {
-  const [showLogo, setShowLogo] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    const logoTimer = setTimeout(() => {
-      setShowLogo(true);
-    }, 2500);
+    // Progress animation from 0% to 100%
+    const progressInterval = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(progressInterval);
+          return 100;
+        }
+        // Faster increment between 2-4 for quicker loading
+        return prev + Math.floor(Math.random() * 3) + 2;
+      });
+    }, 40); // Update every 40ms (faster)
 
-    const hideLogoTimer = setTimeout(() => {
-      setShowLogo(false);
-    }, 5000);
-
-    const fadeTimer = setTimeout(() => {
-      setFadeOut(true);
-    }, 8000);
-
-    const completeTimer = setTimeout(() => {
-      onLoadingComplete();
-    }, 7000);
+    // Start fade out when progress reaches 100%
+    const checkProgress = setInterval(() => {
+      if (progress >= 100) {
+        setTimeout(() => setFadeOut(true), 1000); // Wait 1s after 100%
+        setTimeout(() => onLoadingComplete(), 1500); // Complete after fade
+        clearInterval(checkProgress);
+      }
+    }, 50);
 
     return () => {
-      clearTimeout(logoTimer);
-      clearTimeout(hideLogoTimer);
-      clearTimeout(fadeTimer);
-      clearTimeout(completeTimer);
+      clearInterval(progressInterval);
+      clearInterval(checkProgress);
     };
-  }, [onLoadingComplete]);
+  }, [progress, onLoadingComplete]);
 
   return (
     <div className={`loading-screen ${fadeOut ? 'fade-out' : ''}`}>
-      <div className="black-hole">
-        <div className="ring ring-1"></div>
-        <div className="ring ring-2"></div>
-        <div className="ring ring-3"></div>
-        <div className="ring ring-4"></div>
-        <div className="black-hole-center"></div>
-      </div>
-
-      <div className={`logo-popup ${showLogo ? 'show' : ''}`}>
-        <img src={logoImg} alt="Logo" />
+      <div className="loading-progress">
+        <div className="progress-line">
+          <div className="progress-dots">
+            {Array.from({ length: 80 }, (_, i) => (
+              <span 
+                key={i} 
+                className={`dot ${i < (progress * 0.8) ? 'filled' : ''}`}
+              >
+                •
+              </span>
+            ))}
+          </div>
+          <div className="progress-percentage">{progress}%</div>
+        </div>
       </div>
     </div>
   );
