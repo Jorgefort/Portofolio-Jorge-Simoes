@@ -5,23 +5,20 @@ function Loading({ onLoadingComplete }) {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    // Progress animation from 0% to 100%
     const progressInterval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) {
           clearInterval(progressInterval);
           return 100;
         }
-        // Faster increment between 2-4 for quicker loading
         return prev + Math.floor(Math.random() * 3) + 2;
       });
-    }, 40); // Update every 40ms (faster)
+    }, 85);
 
-    // Start fade out when progress reaches 100%
     const checkProgress = setInterval(() => {
       if (progress >= 100) {
-        setTimeout(() => setFadeOut(true), 1000); // Wait 1s after 100%
-        setTimeout(() => onLoadingComplete(), 1500); // Complete after fade
+        setTimeout(() => setFadeOut(true), 1000);
+        setTimeout(() => onLoadingComplete(), 1500);
         clearInterval(checkProgress);
       }
     }, 50);

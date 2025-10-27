@@ -1,0 +1,56 @@
+/* 
+TODO: Style the loading screen
+
+Tasks:
+1. Reset all elements (margin, padding, box-sizing)
+2. Style html and body:
+   - Height: 100%
+   - Background: black
+   - Hide scrollbars
+   - Font: 'Courier New' or monospace
+
+3. Style .loading-screen:
+   - Position: fixed
+   - Cover full screen (width: 100vw, height: 100vh)
+   - Top and left: 0
+   - Background: black (#000000)
+   - Use flexbox to center content
+   - Z-index: 9999 (appear above everything)
+   - Opacity: 1
+   - Transition: opacity 1s ease
+
+4. Style .loading-screen.fade-out:
+   - Opacity: 0
+
+5. Style .loading-progress:
+   - Use flexbox to center
+   - Width: 100%
+
+6. Style .progress-line:
+   - Use flexbox to align items
+   - Gap: 20px between elements
+   - Font: 'Courier New', monospace
+
+7. Style .progress-dots:
+   - Use flexbox
+   - Gap: 2px between dots
+
+8. Style .dot:
+   - Color: #333333 (dark gray)
+   - Font-size: 8px
+   - Transition: color 0.1s ease
+
+9. Style .dot.filled:
+   - Color: #ffffff (white)
+
+10. Style .progress-percentage:
+    - Color: white
+    - Font-size: 16px
+    - Font-weight: 300
+    - Min-width: 45px
+    - Text-align: right
+
+Hint: Use display: flex, align-items: center, justify-content: center for centering
+*/
+
+/* Your CSS code here */
