@@ -12,6 +12,8 @@ function IntroPage() {
   const [showHomePage, setShowHomePage] = useState(false);
   const [fadeOutHome, setFadeOutHome] = useState(false);
   const [moveToCenter, setMoveToCenter] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const [fadeIn, setFadeIn] = useState(false);
 
   useEffect(() => {
     if (varaRef.current && !varaInitialized.current) {
@@ -42,6 +44,8 @@ function IntroPage() {
   }, []);
 
   const handleLogoClick = () => {
+    setHasAnimated(true);
+    setFadeIn(false);
     setFadeOut(true);
     setTimeout(() => {
       setMoveToCorner(true);
@@ -52,30 +56,35 @@ function IntroPage() {
   };
 
   const handleReset = () => {
-    setShowHomePage(false);
-    setMoveToCenter(true);
-    setMoveToCorner(false);
+    setFadeOutHome(true);
     setTimeout(() => {
-      setFadeOut(false);
+      setMoveToCenter(true);
+      setMoveToCorner(false);
     }, 1000);
     setTimeout(() => {
-      setMoveToCenter(false);
+      setShowHomePage(false);
+      setFadeOutHome(false);
     }, 1200);
+    setTimeout(() => {
+      setMoveToCenter(false);
+      setFadeOut(false);
+      setFadeIn(true);
+    }, 2200);
   };
 
   return (
     <section className="intro-page">
-      <div className={`intro-background ${fadeOut ? 'fade-out' : ''}`}>
+      <div className={`intro-background ${fadeOut ? 'fade-out' : ''} ${fadeIn ? 'fade-in' : ''}`}>
         <img 
           src={backgroundImg} 
           alt="Background"
         />
       </div>
       <div className="intro-content">
-        <div id="vara-container" ref={varaRef} className={fadeOut ? 'fade-out' : ''}></div>
+        <div id="vara-container" ref={varaRef} className={`${fadeOut ? 'fade-out' : ''} ${fadeIn ? 'fade-in' : ''}`}></div>
         {showLogo && (
           <div 
-            className={`intro-logo ${moveToCorner ? 'move-to-corner' : ''} ${moveToCenter ? 'move-to-center' : ''}`}
+            className={`intro-logo ${moveToCorner ? 'move-to-corner' : ''} ${moveToCenter ? 'move-to-center' : ''} ${hasAnimated ? 'no-initial-animation' : ''}`}
             onClick={!moveToCorner ? handleLogoClick : undefined}
           >
             JS
@@ -83,7 +92,8 @@ function IntroPage() {
         )}
       </div>
       {showHomePage && (
-        <div className="home-page">
+        <div className={`home-page ${fadeOutHome ? 'fade-out-home' : ''}`}>
+          <div className="menu-js-logo">JS</div>
           <div className="home-content">
             <h1>Welcome to My Portfolio</h1>
             <p>This is the home page content</p>

@@ -159,14 +159,19 @@ body::-webkit-scrollbar,
   z-index: 10;
 }
 
+.intro-logo.no-initial-animation {
+  animation: none;
+}
+
 .intro-logo.move-to-corner {
   animation: moveToTopLeft 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
-  z-index: 20;
+  z-index: 100;
   opacity: 1 !important;
 }
 
 .intro-logo.move-to-center {
   opacity: 1 !important;
+  z-index: 100;
 }
 
 @keyframes slideUpLogo {
@@ -219,6 +224,12 @@ body::-webkit-scrollbar,
   transition: opacity 1s ease;
 }
 
+.intro-background.fade-in,
+#vara-container.fade-in {
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
 .home-page.fade-out-home {
   animation: fadeOutPage 1s ease-out forwards;
 }
@@ -250,20 +261,32 @@ body::-webkit-scrollbar,
   width: 100vw;
   height: 100vh;
   background-color: #2D2D2D;
-  z-index: 5;
+  z-index: 50;
   animation: fadeInPage 1s ease-in forwards;
   opacity: 0;
 }
 
+.menu-js-logo {
+  position: fixed;
+  bottom: calc(100vh - 60px - 40px);
+  left: calc(40px + 25px);
+  font-family: 'Zeyada', cursive;
+  font-size: 50px;
+  color: #B4AC97;
+  z-index: 60;
+  cursor: pointer;
+  user-select: none;
+}
+
 .close-button {
   position: fixed;
-  bottom: calc(100vh - 60px - 50px);
+  bottom: calc(100vh - 60px - 40px);
   right: calc(40px + 25px);
   font-family: 'Inter', sans-serif;
   font-size: 35px;
   color: #B4AC97;
   cursor: pointer;
-  z-index: 20;
+  z-index: 100;
   line-height: 1;
   user-select: none;
 }
