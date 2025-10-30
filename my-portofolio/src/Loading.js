@@ -7,27 +7,22 @@ function Loading({ onLoadingComplete }) {
   useEffect(() => {
     const progressInterval = setInterval(() => {
       setProgress(prev => {
-        if (prev >= 100) {
+        const newProgress = Math.min(prev + 2, 100);
+        
+        if (newProgress >= 100) {
           clearInterval(progressInterval);
-          return 100;
+          setTimeout(() => setFadeOut(true), 500);
+          setTimeout(() => onLoadingComplete(), 1500);
         }
-        return prev + Math.floor(Math.random() * 3) + 2;
+        
+        return newProgress;
       });
-    }, 80);
-
-    const checkProgress = setInterval(() => {
-      if (progress >= 100) {
-        setTimeout(() => setFadeOut(true), 1000);
-        setTimeout(() => onLoadingComplete(), 1500);
-        clearInterval(checkProgress);
-      }
-    }, 50);
+    }, 20);
 
     return () => {
       clearInterval(progressInterval);
-      clearInterval(checkProgress);
     };
-  }, [progress, onLoadingComplete]);
+  }, [onLoadingComplete]);
 
   return (
     <div className={`loading-screen ${fadeOut ? 'fade-out' : ''}`}>

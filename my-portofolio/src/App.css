@@ -11,7 +11,7 @@ html, body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Literata:wght@200;300&family=Inter:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Literata:wght@200;300&family=Inter:wght@300;400&family=Zeyada&display=swap');
 
 html::-webkit-scrollbar,
 body::-webkit-scrollbar,
@@ -89,4 +89,237 @@ body::-webkit-scrollbar,
   position: relative;
   overflow: hidden;
   background-color: #000000;
+}
+
+.intro-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.intro-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  animation: fadeIn 1s ease-out;
+  filter: brightness(0.6);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.intro-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#vara-container {
+  width: 100%;
+  max-width: 1000px;
+  text-align: center;
+  padding: 20px 40px;
+  overflow: visible;
+}
+
+#vara-container svg {
+  overflow: visible !important;
+}
+
+.intro-logo {
+  font-family: 'Zeyada', cursive;
+  font-size: 60px;
+  color: #B4AC97;
+  animation: slideUpLogo 1s ease-out;
+  position: fixed;
+  bottom: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  padding-bottom: 10px;
+  display: inline-block;
+  z-index: 10;
+}
+
+.intro-logo.move-to-corner {
+  animation: moveToTopLeft 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+  z-index: 20;
+  opacity: 1 !important;
+}
+
+.intro-logo.move-to-center {
+  opacity: 1 !important;
+}
+
+@keyframes slideUpLogo {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes moveToTopLeft {
+  0% {
+    bottom: 5vh;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    font-size: 60px;
+  }
+  100% {
+    bottom: calc(100vh - 60px - 50px);
+    left: calc(40px + 25px);
+    transform: translateX(0) translateY(0);
+    font-size: 50px;
+  }
+}
+
+.intro-logo::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: auto;
+  right: 0;
+  width: 0;
+  height: 2px;
+  background-color: #B4AC97;
+  transition: width 0.4s ease;
+}
+
+.intro-logo:hover::after {
+  width: 100%;
+  left: 0;
+  right: auto;
+}
+
+.intro-background.fade-out,
+#vara-container.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.home-page.fade-out-home {
+  animation: fadeOutPage 1s ease-out forwards;
+}
+
+@keyframes fadeOutPage {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.home-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #2D2D2D;
+  z-index: 5;
+  animation: fadeInPage 1s ease-in forwards;
+  opacity: 0;
+}
+
+.close-button {
+  position: fixed;
+  bottom: calc(100vh - 60px - 50px);
+  right: calc(40px + 25px);
+  font-family: 'Inter', sans-serif;
+  font-size: 35px;
+  color: #B4AC97;
+  cursor: pointer;
+  z-index: 20;
+  line-height: 1;
+  user-select: none;
+}
+
+.intro-logo.move-to-center {
+  animation: moveToBottomCenter 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+  z-index: 20;
+}
+
+@keyframes moveToBottomCenter {
+  0% {
+    bottom: calc(100vh - 60px - 50px);
+    left: calc(40px + 25px);
+    transform: translateX(0) translateY(0);
+    font-size: 50px;
+  }
+  100% {
+    bottom: 5vh;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    font-size: 60px;
+  }
+}
+
+.home-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #B4AC97;
+  padding: 100px 40px 40px 40px;
+}
+
+.home-content h1 {
+  font-family: 'Literata', serif;
+  font-size: 48px;
+  font-weight: 300;
+  margin-bottom: 20px;
+  color: #B4AC97;
+}
+
+.home-content p {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  color: #B4AC97;
+}
+
+@keyframes fadeInPage {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
