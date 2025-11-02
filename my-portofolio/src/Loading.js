@@ -11,13 +11,13 @@ function Loading({ onLoadingComplete }) {
         
         if (newProgress >= 100) {
           clearInterval(progressInterval);
-          setTimeout(() => setFadeOut(true), 500);
-          setTimeout(() => onLoadingComplete(), 1500);
+          setTimeout(() => setFadeOut(true), 1000);
+          setTimeout(() => onLoadingComplete(), 2000);
         }
         
         return newProgress;
       });
-    }, 20);
+    }, 40);
 
     return () => {
       clearInterval(progressInterval);
