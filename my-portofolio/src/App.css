@@ -72,11 +72,11 @@ body::-webkit-scrollbar,
 }
 
 .dot.filled {
-  color: #ffffff;
+  color: #B4AC97;
 }
 
 .progress-percentage {
-  color: #ffffff;
+  color: #B4AC97;
   font-size: 16px;
   font-weight: 300;
   min-width: 45px;
