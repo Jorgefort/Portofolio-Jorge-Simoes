@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Loading from './Loading';
 import IntroPage from './IntroPage';
+import CustomCursor from './CustomCursor';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -10,13 +11,11 @@ function App() {
     setIsLoading(false);
   };
 
-  if (isLoading) {
-    return <Loading onLoadingComplete={handleLoadingComplete} />;
-  }
-
   return (
     <div className="App">
-      <IntroPage />
+      <CustomCursor />
+      {isLoading && <Loading onLoadingComplete={handleLoadingComplete} />}
+      <IntroPage startAnimation={!isLoading} />
     </div>
   );
 }

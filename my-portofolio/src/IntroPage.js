@@ -1,22 +1,22 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Vara from 'vara';
-import backgroundImg from './background.png.png';
+import backgroundImg from './amazing.gif';
+import CircularNav from './CircularNav';
+import Cube3D from './Cube3D';
 
-function IntroPage() {
+function IntroPage({ startAnimation }) {
   const varaRef = useRef(null);
   const varaInitialized = useRef(false);
   const [showLogo, setShowLogo] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
-  const [moveToCorner, setMoveToCorner] = useState(false);
   const [showHomePage, setShowHomePage] = useState(false);
-  const [fadeOutHome, setFadeOutHome] = useState(false);
-  const [moveToCenter, setMoveToCenter] = useState(false);
+  const [showHomeContent, setShowHomeContent] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [fadeIn, setFadeIn] = useState(false);
+  const [welcomeText, setWelcomeText] = useState('');
 
   useEffect(() => {
-    if (varaRef.current && !varaInitialized.current) {
+    if (startAnimation && varaRef.current && !varaInitialized.current) {
       varaInitialized.current = true;
       
       const container = document.getElementById('vara-container');
@@ -28,7 +28,7 @@ function IntroPage() {
         [
           {
             text: 'Jorge Simoes',
-            fontSize: 95,
+            fontSize: 85,
             strokeWidth: 1.2,
             color: '#B4AC97',
             duration: 3000,
@@ -41,68 +41,93 @@ function IntroPage() {
         setShowLogo(true);
       }, 3500);
     }
-  }, []);
+  }, [startAnimation]);
+
+  useEffect(() => {
+    let timeoutId;
+    let intervalId;
+
+    if (showHomeContent) {
+      // Wait 2 seconds before starting to type
+      timeoutId = setTimeout(() => {
+        const text = "Welcome";
+        let currentIndex = 0;
+        
+        intervalId = setInterval(() => {
+          if (currentIndex <= text.length) {
+            setWelcomeText(text.slice(0, currentIndex));
+            currentIndex++;
+          } else {
+            clearInterval(intervalId);
+          }
+        }, 200); // Typing speed
+      }, 2000);
+    } else {
+      setWelcomeText('');
+    }
+
+    return () => {
+      clearTimeout(timeoutId);
+      clearInterval(intervalId);
+    };
+  }, [showHomeContent]);
 
   const handleLogoClick = () => {
     setHasAnimated(true);
-    setFadeIn(false);
     setFadeOut(true);
-    setTimeout(() => {
-      setMoveToCorner(true);
-    }, 1000);
+    
+    // Wait for fade out (1s) then show home page
     setTimeout(() => {
       setShowHomePage(true);
-    }, 2200);
+      // Allow home page to render before fading in content
+      setTimeout(() => {
+        setShowHomeContent(true);
+      }, 50);
+    }, 1000);
   };
 
   const handleReset = () => {
-    setFadeOutHome(true);
-    setTimeout(() => {
-      setMoveToCenter(true);
-      setMoveToCorner(false);
-    }, 1000);
+    setShowHomeContent(false);
+    
+    // Wait for content to fade out
     setTimeout(() => {
       setShowHomePage(false);
-      setFadeOutHome(false);
-    }, 1200);
-    setTimeout(() => {
-      setMoveToCenter(false);
       setFadeOut(false);
-      setFadeIn(true);
-    }, 2200);
+      setHasAnimated(false);
+    }, 1000);
   };
 
   return (
     <section className="intro-page">
-      <div className={`intro-background ${fadeOut ? 'fade-out' : ''} ${fadeIn ? 'fade-in' : ''}`}>
+      <div className="intro-background">
         <img 
           src={backgroundImg} 
           alt="Background"
         />
       </div>
       <div className="intro-content">
-        <div id="vara-container" ref={varaRef} className={`${fadeOut ? 'fade-out' : ''} ${fadeIn ? 'fade-in' : ''}`}></div>
+        <div id="vara-container" ref={varaRef} className={fadeOut ? 'fade-out' : ''}></div>
         {showLogo && (
           <div 
-            className={`intro-logo ${moveToCorner ? 'move-to-corner' : ''} ${moveToCenter ? 'move-to-center' : ''} ${hasAnimated ? 'no-initial-animation' : ''}`}
-            onClick={!moveToCorner ? handleLogoClick : undefined}
+            className={`intro-logo ${hasAnimated ? 'no-initial-animation' : ''} ${fadeOut ? 'fade-out' : ''}`}
+            onClick={handleLogoClick}
           >
             JS
           </div>
         )}
       </div>
-      {showHomePage && (
-        <div className={`home-page ${fadeOutHome ? 'fade-out-home' : ''}`}>
-          <div className="menu-js-logo">JS</div>
-          <div className="home-content">
-            <h1>Welcome to My Portfolio</h1>
-            <p>This is the home page content</p>
-          </div>
-          <div className="close-button" onClick={handleReset}>
-            ✕
-          </div>
+      <div className={`home-page ${showHomePage ? 'visible' : ''}`}>
+        <div className={`home-content ${showHomeContent ? 'visible' : ''}`}>
+          <Cube3D />
+          <div className="welcome-text">{welcomeText}</div>
         </div>
-      )}
+        <div className={`close-button ${showHomeContent ? 'visible' : ''}`} onClick={handleReset}>
+          ✕
+        </div>
+        <div style={{ opacity: showHomeContent ? 1 : 0, transition: 'opacity 1s ease', pointerEvents: showHomeContent ? 'auto' : 'none' }}>
+          <CircularNav />
+        </div>
+      </div>
     </section>
   );
 }

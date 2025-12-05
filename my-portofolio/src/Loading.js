@@ -5,40 +5,43 @@ function Loading({ onLoadingComplete }) {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    const progressInterval = setInterval(() => {
+    // const duration = 3500; // Slower loading (3.5s)
+    const interval = 50;
+    
+    const timer = setInterval(() => {
       setProgress(prev => {
-        const newProgress = Math.min(prev + 2, 100);
+        const diff = 100 - prev;
+        const add = Math.max(0.2, diff * 0.05); // Slower non-linear progress
+        const next = prev + add;
         
-        if (newProgress >= 100) {
-          clearInterval(progressInterval);
-          setTimeout(() => setFadeOut(true), 1000);
-          setTimeout(() => onLoadingComplete(), 2000);
+        if (next >= 99.5) {
+          clearInterval(timer);
+          setProgress(100);
+          setTimeout(() => setFadeOut(true), 800);
+          setTimeout(() => onLoadingComplete(), 1800);
+          return 100;
         }
-        
-        return newProgress;
+        return next;
       });
-    }, 40);
+    }, interval);
 
-    return () => {
-      clearInterval(progressInterval);
-    };
+    return () => clearInterval(timer);
   }, [onLoadingComplete]);
 
   return (
     <div className={`loading-screen ${fadeOut ? 'fade-out' : ''}`}>
-      <div className="loading-progress">
-        <div className="progress-line">
-          <div className="progress-dots">
-            {Array.from({ length: 80 }, (_, i) => (
-              <span 
-                key={i} 
-                className={`dot ${i < (progress * 0.8) ? 'filled' : ''}`}
-              >
-                •
-              </span>
-            ))}
+      <div className="loading-content">
+        <div className="loading-text-wrapper">
+          PORTFOLIO
+          <div 
+            className="loading-text-filled" 
+            style={{ width: `${progress}%` }}
+          >
+            PORTFOLIO
           </div>
-          <div className="progress-percentage">{progress}%</div>
+        </div>
+        <div className="loading-percentage">
+          {Math.floor(progress).toString().padStart(3, '0')}%
         </div>
       </div>
     </div>
