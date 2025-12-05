@@ -1,0 +1,8 @@
+[build]
+  command = "cd my-portofolio && npm install && CI=false npm run build"
+  publish = "my-portofolio/build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
