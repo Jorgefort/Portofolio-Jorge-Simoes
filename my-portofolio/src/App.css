@@ -2,7 +2,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: none; /* Hide default cursor */
+  cursor: none !important; /* Hide default cursor everywhere */
+  user-select: none; /* Disable text selection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Ensure cursor is hidden on interactive elements */
+a, button, input, textarea, select, label {
+  cursor: none !important;
 }
 
 html, body {
@@ -21,7 +30,7 @@ html, body {
   height: 20px;
   border-radius: 50%;
   background-color: #B4AC97; /* Yellow */
-  border: 1px solid black; /* Thin black border */
+  border: 1px solid #B4AC97; /* Thin black border */
   pointer-events: none;
   z-index: 99999;
   transform: translate(-50%, -50%);
@@ -55,50 +64,66 @@ body::-webkit-scrollbar,
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  opacity: 1;
-  transition: opacity 1s ease;
 }
 
-.loading-screen.fade-out {
-  opacity: 0;
-  pointer-events: none;
+.loading-curtain {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background-color: #2D2E2C; /* Match intro page bg */
+  z-index: 10000;
+  transition: height 1.2s cubic-bezier(0.65, 0, 0.35, 1); /* Slower rise */
+}
+
+.loading-curtain.active {
+  height: 100%;
 }
 
 .loading-content {
   position: relative;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* Lower than curtain (10000) so curtain covers it */
 }
 
-.loading-text-wrapper {
-  position: relative;
-  font-family: 'Literata', serif;
-  font-size: 80px;
-  font-weight: 300;
-  letter-spacing: 10px;
-  text-transform: uppercase;
-  color: #333; /* Empty state color */
-  -webkit-text-stroke: 1px #333;
+.loading-content.fade-content {
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
-.loading-text-filled {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0%; /* Animated via inline style */
+.cat-spinner-container {
+  margin-bottom: 20px; /* Space between cat and percentage */
+  width: 150px; /* Adjust size as needed */
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cat-spinner {
+  width: 100%;
   height: 100%;
-  color: #B4AC97;
-  -webkit-text-stroke: 0px transparent;
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 2px solid #B4AC97; /* Cursor effect */
-  transition: width 0.1s linear;
+  object-fit: contain;
+  animation: spinCycle 2.5s cubic-bezier(0.45, 0, 0.55, 1) infinite; /* Slightly slower for elegance */
+  animation-delay: 0.3s;
+}
+
+@keyframes spinCycle {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(0deg); }     /* Short pause */
+  90% { transform: rotate(1440deg); }  /* Spin 4 times (faster peak speed) */
+  100% { transform: rotate(1440deg); } /* Short pause */
 }
 
 .loading-percentage {
-  margin-top: 20px;
   font-family: 'Courier New', monospace;
-  color: #555;
-  font-size: 14px;
+  color: #B4AC97;
+  font-size: 18px;
   letter-spacing: 2px;
 }
 
@@ -108,7 +133,7 @@ body::-webkit-scrollbar,
   height: 100vh;
   position: relative;
   overflow: hidden;
-  background-color: #000000;
+  background-color: #2D2E2C; /* Match home page background */
 }
 
 .intro-background {
@@ -118,18 +143,10 @@ body::-webkit-scrollbar,
   width: 100%;
   height: 100%;
   z-index: 1;
-  background-color: #000000;
+  background-color: #000000; /* Black background for opacity */
 }
 
-.intro-background img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  animation: fadeIn 1s ease-out;
-  filter: brightness(0.6);
-}
+/* Removed img styles */
 
 @keyframes fadeIn {
   0% { opacity: 0; }
@@ -224,7 +241,7 @@ body::-webkit-scrollbar,
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #000000;
+  background-color: rgba(0, 0, 0, 0.95); /* Very slight transparency */
   z-index: 50;
   opacity: 0;
   pointer-events: none;
@@ -296,7 +313,7 @@ body::-webkit-scrollbar,
 
 /* Adjust Home Page */
 .home-page {
-  background-color: rgba(0, 0, 0, 0.9); /* Less transparent dark background */
+  background-color: #2D2E2C;
 }
 
 .home-content {
@@ -305,15 +322,23 @@ body::-webkit-scrollbar,
   max-width: 100vw;
   overflow-x: hidden;
   opacity: 0;
-  animation: fadeInUpContent 0.8s ease forwards 0.4s;
+  transform: translateY(30px);
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+}
+
+.home-content.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .welcome-text {
-  font-family: 'Zen Kaku Gothic New', sans-serif;
-  font-style: oblique; /* Standard way to request synthetic italic */
+  font-family: 'Zen Old Mincho', serif;
+  font-style: italic;
   color: #B4AC97;
   font-size: 60px;
   margin-top: -50px; /* Pull it up a bit closer to the cube if needed, or adjust Cube3D height */
@@ -429,6 +454,128 @@ body::-webkit-scrollbar,
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+/* --- Projects Page --- */
+.projects-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start; /* Align to left */
+  align-items: center;
+  padding-left: 5%; /* Add some spacing from left edge */
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.projects-page.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.projects-container {
+  width: 55%; /* Just above half of the page */
+  max-width: none;
+  z-index: 20;
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.project-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 20px; /* Increased padding for better spacing */
+  border-bottom: 1px solid rgba(180, 172, 151, 0.15);
+  color: #B4AC97;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Smooth ease-out */
+  cursor: none !important;
+  position: relative;
+}
+
+.project-row:first-child {
+  border-top: 1px solid rgba(180, 172, 151, 0.15);
+}
+
+.project-row:hover {
+  color: #ffffff;
+  padding-left: 35px; /* Subtle slide effect */
+  background-color: rgba(180, 172, 151, 0.02); /* Very subtle highlight */
+  border-bottom: 1px solid rgba(180, 172, 151, 0.4);
+}
+
+.project-col {
+  flex: 1;
+  font-family: 'Zen Old Mincho', serif;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+
+.project-col.id {
+  flex: 0 0 8%;
+  font-family: 'Zen Old Mincho', serif; /* Cleaner look for numbers */
+  font-size: 16px;
+  opacity: 0.7;
+}
+
+.project-col.name {
+  flex: 0 0 45%;
+  font-family: 'Zeyada', cursive;
+  font-size: 36px; /* Larger for emphasis */
+  letter-spacing: 1.5px;
+  line-height: 1;
+}
+
+.project-col.tech {
+  flex: 0 0 30%;
+  font-family: 'Zen Old Mincho', serif; /* Switch to serif for readability */
+  font-style: italic;
+  font-size: 16px;
+  opacity: 0.8;
+  text-transform: lowercase;
+}
+
+.project-col.year {
+  flex: 0 0 17%;
+  text-align: right;
+  font-family: 'Zen Old Mincho', serif;
+  font-size: 16px;
+  opacity: 0.7;
+}
+
+/* Background Image Layer */
+.project-bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.project-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.project-bg-image.active {
+  opacity: 0.2; /* Reduced opacity for subtler effect */
 }
 
 @keyframes rotateText {

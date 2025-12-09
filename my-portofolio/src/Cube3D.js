@@ -41,7 +41,7 @@ const Cube = () => {
 const Cube3D = () => {
   return (
     <div style={{ width: '100%', height: '600px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <Canvas camera={{ position: [0, 0, 11], fov: 45 }}>
+      <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 11], fov: 45 }} gl={{ antialias: true }}>
         <ambientLight intensity={0.5} />
         <Cube />
       </Canvas>

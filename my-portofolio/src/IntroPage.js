@@ -1,9 +1,10 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Vara from 'vara';
-import backgroundImg from './amazing.gif';
 import CircularNav from './CircularNav';
 import Cube3D from './Cube3D';
+import Projects from './Projects';
+import bgImage from './background.png.png';
 
 function IntroPage({ startAnimation }) {
   const varaRef = useRef(null);
@@ -14,6 +15,9 @@ function IntroPage({ startAnimation }) {
   const [showHomeContent, setShowHomeContent] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [welcomeText, setWelcomeText] = useState('');
+  const [currentPage, setCurrentPage] = useState('home'); // 'home', 'projects', 'about', 'contact'
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [contentVisible, setContentVisible] = useState(false);
 
   useEffect(() => {
     if (startAnimation && varaRef.current && !varaInitialized.current) {
@@ -21,6 +25,11 @@ function IntroPage({ startAnimation }) {
       
       const container = document.getElementById('vara-container');
       container.innerHTML = '';
+      
+      // Trigger fade in
+      setTimeout(() => {
+        setContentVisible(true);
+      }, 100);
       
       new Vara(
         '#vara-container',
@@ -47,7 +56,7 @@ function IntroPage({ startAnimation }) {
     let timeoutId;
     let intervalId;
 
-    if (showHomeContent) {
+    if (showHomeContent && currentPage === 'home') {
       // Wait 2 seconds before starting to type
       timeoutId = setTimeout(() => {
         const text = "Welcome";
@@ -70,7 +79,7 @@ function IntroPage({ startAnimation }) {
       clearTimeout(timeoutId);
       clearInterval(intervalId);
     };
-  }, [showHomeContent]);
+  }, [showHomeContent, currentPage]);
 
   const handleLogoClick = () => {
     setHasAnimated(true);
@@ -94,18 +103,45 @@ function IntroPage({ startAnimation }) {
       setShowHomePage(false);
       setFadeOut(false);
       setHasAnimated(false);
+      setCurrentPage('home'); // Reset to home
     }, 1000);
+  };
+
+  const handleNavigation = (page) => {
+    if (page === currentPage || isTransitioning) return;
+    
+    setIsTransitioning(true);
+    
+    // Fade out current content
+    // We can use a simple timeout to switch the page state after fade out
+    setTimeout(() => {
+      setCurrentPage(page);
+      setIsTransitioning(false);
+    }, 500); // Match CSS transition duration
   };
 
   return (
     <section className="intro-page">
-      <div className="intro-background">
+      <div 
+        className="intro-background" 
+        style={{ 
+          opacity: contentVisible ? 1 : 0, 
+          transition: 'opacity 1.5s ease' 
+        }}
+      >
         <img 
-          src={backgroundImg} 
+          src={bgImage} 
           alt="Background"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4 }}
         />
       </div>
-      <div className="intro-content">
+      <div 
+        className="intro-content"
+        style={{ 
+          opacity: contentVisible ? 1 : 0, 
+          transition: 'opacity 1.5s ease' 
+        }}
+      >
         <div id="vara-container" ref={varaRef} className={fadeOut ? 'fade-out' : ''}></div>
         {showLogo && (
           <div 
@@ -117,15 +153,27 @@ function IntroPage({ startAnimation }) {
         )}
       </div>
       <div className={`home-page ${showHomePage ? 'visible' : ''}`}>
-        <div className={`home-content ${showHomeContent ? 'visible' : ''}`}>
+        
+        {/* Home Content */}
+        <div className={`home-content ${showHomeContent && currentPage === 'home' && !isTransitioning ? 'visible' : ''}`}>
           <Cube3D />
           <div className="welcome-text">{welcomeText}</div>
         </div>
-        <div className={`close-button ${showHomeContent ? 'visible' : ''}`} onClick={handleReset}>
+
+        {/* Projects Content */}
+        <Projects isVisible={showHomeContent && currentPage === 'projects' && !isTransitioning} />
+
+        {/* Close Button (Only on Home) */}
+        <div 
+          className={`close-button ${showHomeContent && currentPage === 'home' ? 'visible' : ''}`} 
+          onClick={handleReset}
+        >
           ✕
         </div>
+
+        {/* Navigation */}
         <div style={{ opacity: showHomeContent ? 1 : 0, transition: 'opacity 1s ease', pointerEvents: showHomeContent ? 'auto' : 'none' }}>
-          <CircularNav />
+          <CircularNav onNavigate={handleNavigation} />
         </div>
       </div>
     </section>

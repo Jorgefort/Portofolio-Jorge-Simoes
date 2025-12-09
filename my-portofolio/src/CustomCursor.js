@@ -7,7 +7,7 @@ const CustomCursor = () => {
   useEffect(() => {
     const updatePosition = (e) => {
       setPosition({ x: e.clientX, y: e.clientY });
-      if (!isVisible) setIsVisible(true);
+      setIsVisible(true);
     };
 
     const handleMouseLeave = () => setIsVisible(false);
@@ -22,7 +22,7 @@ const CustomCursor = () => {
       document.body.removeEventListener('mouseleave', handleMouseLeave);
       document.body.removeEventListener('mouseenter', handleMouseEnter);
     };
-  }, [isVisible]);
+  }, []);
 
   if (!isVisible) return null;
 
