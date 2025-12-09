@@ -183,13 +183,18 @@ body::-webkit-scrollbar,
   width: 100%;
   max-width: 1000px;
   text-align: center;
-  padding: 20px 40px;
+  padding: 0 20px; /* Reduced side padding */
   overflow: visible;
   transition: opacity 0.5s ease;
+  display: flex;
+  justify-content: center;
 }
 
 #vara-container svg {
+  width: 100%;
+  height: auto;
   overflow: visible !important;
+  max-height: 30vh; /* Prevent it from taking too much vertical space */
 }
 
 /* Intro Logo (JS) */
@@ -603,4 +608,108 @@ body::-webkit-scrollbar,
 @keyframes rotateText {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* --- Responsive Design --- */
+
+/* Default Cube Container */
+.cube-container {
+  width: 100%;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  /* Restore default cursor on touch devices */
+  * {
+    cursor: auto !important;
+  }
+  
+  a, button, input, textarea, select, label {
+    cursor: pointer !important;
+  }
+
+  .custom-cursor {
+    display: none !important;
+  }
+
+  /* Intro Page Adjustments */
+  .intro-logo {
+    font-size: 40px;
+    bottom: 10vh;
+  }
+
+  #vara-container {
+    padding: 0 10px;
+    width: 100%;
+  }
+
+  /* Home Page Adjustments */
+  .cube-container {
+    height: 350px; /* Smaller cube area */
+  }
+
+  .welcome-text {
+    font-size: 40px;
+    margin-top: -20px;
+  }
+
+  .close-button {
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+  }
+
+  /* Circular Navigation - Center Bottom */
+  .circular-nav-container {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 30px;
+    width: 120px;
+    height: 120px;
+  }
+
+  /* Projects Page Adjustments */
+  .projects-page {
+    padding-left: 0;
+    justify-content: center;
+  }
+
+  .projects-container {
+    width: 90%;
+  }
+
+  .project-row {
+    flex-wrap: wrap;
+    padding: 20px 10px;
+  }
+
+  .project-row:hover {
+    padding-left: 10px; /* Disable slide effect on mobile */
+  }
+
+  .project-col.id {
+    display: none;
+  }
+
+  .project-col.year {
+    display: none;
+  }
+
+  .project-col.name {
+    flex: 0 0 100%;
+    font-size: 28px;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+
+  .project-col.tech {
+    flex: 0 0 100%;
+    font-size: 14px;
+    text-align: left;
+    opacity: 0.6;
+  }
 }

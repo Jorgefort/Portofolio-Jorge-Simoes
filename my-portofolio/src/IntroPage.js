@@ -31,13 +31,15 @@ function IntroPage({ startAnimation }) {
         setContentVisible(true);
       }, 100);
       
+      const isMobile = window.innerWidth <= 768;
+      
       new Vara(
         '#vara-container',
         'https://raw.githubusercontent.com/akzhy/Vara/master/fonts/Satisfy/SatisfySL.json',
         [
           {
             text: 'Jorge Simoes',
-            fontSize: 85,
+            fontSize: isMobile ? 50 : 85,
             strokeWidth: 1.2,
             color: '#B4AC97',
             duration: 3000,

@@ -5,6 +5,11 @@ const CustomCursor = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    // Don't initialize custom cursor on touch devices or small screens
+    if (window.matchMedia("(pointer: coarse)").matches || window.innerWidth <= 768) {
+      return;
+    }
+
     const updatePosition = (e) => {
       setPosition({ x: e.clientX, y: e.clientY });
       setIsVisible(true);
