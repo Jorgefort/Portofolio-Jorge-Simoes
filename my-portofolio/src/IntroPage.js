@@ -173,7 +173,7 @@ function IntroPage({ startAnimation }) {
 
         {/* Navigation */}
         <div style={{ opacity: showHomeContent ? 1 : 0, transition: 'opacity 1s ease', pointerEvents: showHomeContent ? 'auto' : 'none' }}>
-          <CircularNav onNavigate={handleNavigation} />
+          <CircularNav onNavigate={handleNavigation} activePage={currentPage} />
         </div>
       </div>
     </section>
