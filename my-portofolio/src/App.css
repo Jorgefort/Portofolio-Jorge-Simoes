@@ -14,6 +14,19 @@ a, button, input, textarea, select, label {
   cursor: none !important;
 }
 
+/* Prevent image dragging and selection globally */
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  pointer-events: none; /* Prevents right-click context menu on images too */
+}
+
+/* Re-enable pointer events for images that need interaction (like the logo link wrapper handles the click, so img can be none) */
+/* If any specific image needs to be clickable directly, add pointer-events: auto to it */
+
 html, body {
   height: 100%;
   background-color: #000000;
