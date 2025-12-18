@@ -1,10 +1,12 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import Vara from 'vara';
-import CircularNav from './CircularNav';
-import Cube3D from './Cube3D';
-import Projects from './Projects';
-import bgImage from './background.png.png';
+import bgImage from './background.webp';
+
+// Lazy load heavy components
+const CircularNav = lazy(() => import('./CircularNav'));
+const Cube3D = lazy(() => import('./Cube3D'));
+const Projects = lazy(() => import('./Projects'));
 
 function IntroPage({ startAnimation }) {
   const varaRef = useRef(null);
@@ -131,11 +133,15 @@ function IntroPage({ startAnimation }) {
           transition: 'opacity 1.5s ease' 
         }}
       >
-        <img 
-          src={bgImage} 
-          alt="Background"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4 }}
-        />
+        <picture>
+          <source srcSet={bgImage} type="image/webp" />
+          <img 
+            src={bgImage} 
+            alt="Background"
+            loading="lazy"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4 }}
+          />
+        </picture>
       </div>
       <div 
         className="intro-content"
@@ -157,13 +163,15 @@ function IntroPage({ startAnimation }) {
       <div className={`home-page ${showHomePage ? 'visible' : ''}`}>
         
         {/* Home Content */}
-        <div className={`home-content ${showHomeContent && currentPage === 'home' && !isTransitioning ? 'visible' : ''}`}>
-          <Cube3D />
-          <div className="welcome-text">{welcomeText}</div>
-        </div>
+        <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+          <div className={`home-content ${showHomeContent && currentPage === 'home' && !isTransitioning ? 'visible' : ''}`}>
+            <Cube3D />
+            <div className="welcome-text">{welcomeText}</div>
+          </div>
 
-        {/* Projects Content */}
-        <Projects isVisible={showHomeContent && currentPage === 'projects' && !isTransitioning} />
+          {/* Projects Content */}
+          <Projects isVisible={showHomeContent && currentPage === 'projects' && !isTransitioning} />
+        </Suspense>
 
         {/* Close Button (Only on Home) */}
         <div 
@@ -174,9 +182,11 @@ function IntroPage({ startAnimation }) {
         </div>
 
         {/* Navigation */}
-        <div style={{ opacity: showHomeContent ? 1 : 0, transition: 'opacity 1s ease', pointerEvents: showHomeContent ? 'auto' : 'none' }}>
-          <CircularNav onNavigate={handleNavigation} activePage={currentPage} />
-        </div>
+        <Suspense fallback={<div />}>
+          <div style={{ opacity: showHomeContent ? 1 : 0, transition: 'opacity 1s ease', pointerEvents: showHomeContent ? 'auto' : 'none' }}>
+            <CircularNav onNavigate={handleNavigation} activePage={currentPage} />
+          </div>
+        </Suspense>
       </div>
     </section>
   );

@@ -4,37 +4,121 @@ import bgImage from './background.png.png';
 const projectsData = [
   {
     id: '01',
-    name: 'Aurea monsieur',
+    name: 'Ultrakill',
     tech: 'ReactJS',
     year: '2025',
     link: '#'
   },
   {
     id: '02',
+    name: 'Aurea monsieur',
+    tech: 'ReactJS',
+    year: '2025',
+    link: '#'
+  },
+  {
+    id: '03',
     name: 'Quizze',
     tech: 'TailwindCss',
     year: '2025',
     link: '#'
   },
   {
-    id: '03',
+    id: '04',
     name: 'Mission to mars',
     tech: 'Java',
     year: '2025',
     link: '#'
   },
   {
-    id: '04',
+    id: '05',
     name: 'Artmus',
     tech: 'Ruby',
-    year: '2024',
+    year: '2025',
     link: '#'
   },
   {
-    id: '05',
+    id: '06',
     name: 'Muscplay',
     tech: 'Python',
-    year: '2024',
+    year: '2025',
+    link: '#'
+  },
+  {
+    id: '07',
+    name: 'mudslike',
+    tech: 'Python',
+    year: '2025',
+    link: '#'
+  },
+  {
+    id: '08',
+    name: 'Gav2',
+    tech: 'Ruby',
+    year: '2025',
+    link: '#'
+  },
+  {
+    id: '09',
+    name: 'youcopy',
+    tech: 'node',
+    year: '2025',
+    link: '#'
+  },
+  {
+    id: '10',
+    name: 'supabase',
+    tech: 'SQL',
+    year: '2025',
+    link: '#'
+  },
+  {
+    id: '11',
+    name: 'Ultrakill',
+    tech: 'React.js',
+    year: '2025',
+    link: '#'
+  },
+  {
+    id: '12',
+    name: 'Ultrakill',
+    tech: 'React.js',
+    year: '2025',
+    link: '#'
+  },
+  {
+    id: '13',
+    name: 'Ultrakill',
+    tech: 'React.js',
+    year: '2025',
+    link: '#'
+  },
+  {
+    id: '14',
+    name: 'Ultrakill',
+    tech: 'React.js',
+    year: '2025',
+    link: '#'
+  },
+  {
+    id: '15',
+    name: 'Ultrakill',
+    tech: 'React.js',
+    year: '2025',
+    link: '#'
+  },
+  {
+    id: '17',
+    name: 'Ultrakill',
+    tech: 'React.js',
+    year: '2025',
+    link: '#'
+  },
+  {
+    id: '18',
+    name: 'Ultrakill',
+    tech: 'React.js',
+    year: '2025',
     link: '#'
   }
 ];

@@ -50,7 +50,7 @@ html, body {
   transition: width 0.2s, height 0.2s; /* Optional: for hover effects later */
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Literata:wght@200;300&family=Inter:wght@300;400&family=Zeyada&family=Zen+Old+Mincho&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap');
+/* Fonts are loaded in HTML to avoid CSS @import render blocking */
 
 html::-webkit-scrollbar,
 body::-webkit-scrollbar,
@@ -506,9 +506,20 @@ body::-webkit-scrollbar,
 }
 
 .projects-container {
-  width: 55%; /* Just above half of the page */
+  width: 75%; /* Wider table */
   max-width: none;
+  max-height: 70vh; /* Scrollable viewport height */
+  overflow-y: auto;
+  overflow-x: hidden;
   z-index: 20;
+  scroll-behavior: smooth; /* Smooth scrolling */
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.projects-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .projects-list {
@@ -521,7 +532,7 @@ body::-webkit-scrollbar,
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 20px; /* Increased padding for better spacing */
+  padding: 18px 20px; /* Tighter spacing between rows */
   border-bottom: 1px solid rgba(180, 172, 151, 0.15);
   color: #B4AC97;
   text-decoration: none;
@@ -537,6 +548,8 @@ body::-webkit-scrollbar,
 .project-row:hover {
   color: #ffffff;
   padding-left: 35px; /* Subtle slide effect */
+  padding-top: 18px;
+  padding-bottom: 18px;
   background-color: rgba(180, 172, 151, 0.02); /* Very subtle highlight */
   border-bottom: 1px solid rgba(180, 172, 151, 0.4);
 }
@@ -557,10 +570,12 @@ body::-webkit-scrollbar,
 
 .project-col.name {
   flex: 0 0 45%;
-  font-family: 'Zeyada', cursive;
-  font-size: 36px; /* Larger for emphasis */
-  letter-spacing: 1.5px;
-  line-height: 1;
+  font-family: 'Literata', serif;
+  font-size: 24px; /* Adjusted for new font */
+  font-weight: 300;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
 .project-col.tech {
