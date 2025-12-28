@@ -749,8 +749,9 @@ body::-webkit-scrollbar,
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
   opacity: 0;
   animation-name: floatUp;
-  animation-timing-function: linear;
+  animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
+  will-change: transform, opacity;
 }
 
 @keyframes floatUp {
@@ -758,10 +759,10 @@ body::-webkit-scrollbar,
     transform: translateY(0) translateX(0);
     opacity: 0;
   }
-  10% {
+  5% {
     opacity: 1;
   }
-  80% {
+  95% {
     opacity: 1;
   }
   100% {

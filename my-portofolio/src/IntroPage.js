@@ -60,12 +60,20 @@ function IntroPage({ startAnimation }) {
     const container = document.querySelector('.particles-container');
     if (!container) return;
 
+    // Detect mobile/low-end devices
+    const isMobile = window.innerWidth <= 768 || window.matchMedia("(pointer: coarse)").matches;
+    const isLowEnd = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+    
+    // Adjust particle settings based on device
+    const spawnInterval = isMobile ? 1200 : 400; // Much slower on mobile
+    const initialCount = isMobile ? 3 : 8; // Fewer initial particles on mobile
+
     const createParticle = () => {
       const particle = document.createElement('div');
       particle.classList.add('light-particle');
       
       // Random properties
-      const size = Math.random() * 4 + 2; // 2px to 6px
+      const size = Math.random() * 5 + 3; // 3px to 8px
       const left = Math.random() * 100; // 0% to 100%
       const duration = Math.random() * 15 + 10; // 10s to 25s
       
@@ -76,20 +84,26 @@ function IntroPage({ startAnimation }) {
       
       container.appendChild(particle);
       
-      // Remove after animation
-      setTimeout(() => {
+      // Remove after animation completes
+      particle.addEventListener('animationend', () => {
         particle.remove();
-      }, duration * 1000);
+      });
     };
 
-    // Create initial batch
-    for(let i = 0; i < 20; i++) {
-        setTimeout(createParticle, Math.random() * 3000);
+    // Create particles at evenly distributed intervals for smooth consistent flow
+    const interval = setInterval(createParticle, spawnInterval);
+    
+    // Start with a few particles immediately for instant visual feedback
+    for(let i = 0; i < initialCount; i++) {
+        setTimeout(createParticle, i * spawnInterval);
     }
 
-    const interval = setInterval(createParticle, 800); // Create a new particle every 800ms
-
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      // Clean up any remaining particles
+      const particles = container.querySelectorAll('.light-particle');
+      particles.forEach(p => p.remove());
+    };
   }, []);
 
   useEffect(() => {
