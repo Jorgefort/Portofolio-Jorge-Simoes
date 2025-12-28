@@ -57,6 +57,42 @@ function IntroPage({ startAnimation }) {
   }, [startAnimation]);
 
   useEffect(() => {
+    const container = document.querySelector('.particles-container');
+    if (!container) return;
+
+    const createParticle = () => {
+      const particle = document.createElement('div');
+      particle.classList.add('light-particle');
+      
+      // Random properties
+      const size = Math.random() * 4 + 2; // 2px to 6px
+      const left = Math.random() * 100; // 0% to 100%
+      const duration = Math.random() * 15 + 10; // 10s to 25s
+      
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${left}%`;
+      particle.style.animationDuration = `${duration}s`;
+      
+      container.appendChild(particle);
+      
+      // Remove after animation
+      setTimeout(() => {
+        particle.remove();
+      }, duration * 1000);
+    };
+
+    // Create initial batch
+    for(let i = 0; i < 20; i++) {
+        setTimeout(createParticle, Math.random() * 3000);
+    }
+
+    const interval = setInterval(createParticle, 800); // Create a new particle every 800ms
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
     let timeoutId;
     let intervalId;
 
@@ -139,9 +175,10 @@ function IntroPage({ startAnimation }) {
             src={bgImage} 
             alt="Background"
             loading="lazy"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4 }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </picture>
+        <div className="particles-container"></div>
       </div>
       <div 
         className="intro-content"
