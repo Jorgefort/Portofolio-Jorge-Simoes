@@ -512,10 +512,11 @@ body::-webkit-scrollbar,
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 20;
-  scroll-behavior: smooth; /* Smooth scrolling */
+  /* Removed scroll-behavior: smooth for better performance */
   /* Hide scrollbar but keep functionality */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE/Edge */
+  position: relative;
 }
 
 .projects-container::-webkit-scrollbar {
@@ -536,9 +537,14 @@ body::-webkit-scrollbar,
   border-bottom: 1px solid rgba(180, 172, 151, 0.15);
   color: #B4AC97;
   text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Smooth ease-out */
+  /* Optimized transitions - only animate transform and color for better performance */
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: none !important;
   position: relative;
+  will-change: transform; /* Hint browser for GPU acceleration */
 }
 
 .project-row:first-child {
@@ -547,9 +553,8 @@ body::-webkit-scrollbar,
 
 .project-row:hover {
   color: #ffffff;
-  padding-left: 35px; /* Subtle slide effect */
-  padding-top: 18px;
-  padding-bottom: 18px;
+  /* Use transform instead of padding for better performance */
+  transform: translateX(15px);
   background-color: rgba(180, 172, 151, 0.02); /* Very subtle highlight */
   border-bottom: 1px solid rgba(180, 172, 151, 0.4);
 }
@@ -614,11 +619,68 @@ body::-webkit-scrollbar,
   height: 100%;
   opacity: 0;
   transition: opacity 0.5s ease;
+  will-change: opacity; /* GPU acceleration for opacity changes */
 }
 
 .project-bg-image.active {
   opacity: 0.2; /* Reduced opacity for subtler effect */
 }
+
+/* Scroll Indicator - Fun Curved Arrow */
+.scroll-indicator {
+  position: absolute;
+  top: 10%;
+  left: calc(75% + 30px);
+  pointer-events: none;
+  z-index: 30;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  transition: opacity 0.4s ease;
+}
+
+.scroll-indicator.hidden {
+  opacity: 0;
+}
+
+.scroll-text {
+  font-family: 'Literata', serif;
+  font-size: 18px;
+  color: #B4AC97;
+  letter-spacing: 1px;
+  font-style: italic;
+  font-weight: 300;
+  white-space: nowrap;
+  align-self: center;
+}
+
+.curved-arrow {
+  width: 60px;
+  height: 60px;
+  position: relative;
+}
+
+.curved-arrow svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.curved-arrow svg path {
+  stroke: #B4AC97;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.arrow-head {
+  fill: #B4AC97;
+  stroke: none;
+}
+
+
 
 @keyframes rotateText {
   from { transform: rotate(0deg); }
@@ -749,9 +811,8 @@ body::-webkit-scrollbar,
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
   opacity: 0;
   animation-name: floatUp;
-  animation-timing-function: ease-in-out;
+  animation-timing-function: linear;
   animation-fill-mode: forwards;
-  will-change: transform, opacity;
 }
 
 @keyframes floatUp {
@@ -759,10 +820,10 @@ body::-webkit-scrollbar,
     transform: translateY(0) translateX(0);
     opacity: 0;
   }
-  5% {
+  10% {
     opacity: 1;
   }
-  95% {
+  80% {
     opacity: 1;
   }
   100% {

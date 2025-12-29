@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import bgImage from './background.png.png';
 
 const projectsData = [
@@ -125,6 +125,26 @@ const projectsData = [
 
 const Projects = ({ isVisible }) => {
   const [hoveredProject, setHoveredProject] = useState(null);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      // Hide indicator when user scrolls
+      const scrolledToBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 50;
+      setShowScrollIndicator(!scrolledToBottom && container.scrollTop < 50);
+    };
+
+    // Check if content is scrollable
+    const isScrollable = container.scrollHeight > container.clientHeight;
+    setShowScrollIndicator(isScrollable);
+
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [isVisible]);
 
   return (
     <div className={`projects-page ${isVisible ? 'visible' : ''}`}>
@@ -141,7 +161,7 @@ const Projects = ({ isVisible }) => {
         />
       </div>
 
-      <div className="projects-container">
+      <div className="projects-container" ref={containerRef}>
         <div className="projects-list">
           {projectsData.map((project) => (
             <a 
@@ -160,6 +180,17 @@ const Projects = ({ isVisible }) => {
             </a>
           ))}
         </div>
+      </div>
+
+      {/* Scroll Indicator - Fun Curved Arrow */}
+      <div className={`scroll-indicator ${!showScrollIndicator ? 'hidden' : ''}`}>
+        <div className="curved-arrow">
+          <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 50 30 Q 30 25, 15 30" />
+            <polygon className="arrow-head" points="15,25 10,30 15,35" />
+          </svg>
+        </div>
+        <span className="scroll-text">Scroll me!</span>
       </div>
     </div>
   );
