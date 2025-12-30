@@ -7,6 +7,7 @@ import bgImage from './background.webp';
 const CircularNav = lazy(() => import('./CircularNav'));
 const Cube3D = lazy(() => import('./Cube3D'));
 const Projects = lazy(() => import('./Projects'));
+const About = lazy(() => import('./About'));
 
 function IntroPage({ startAnimation }) {
   const varaRef = useRef(null);
@@ -189,11 +190,23 @@ function IntroPage({ startAnimation }) {
       >
         <div id="vara-container" ref={varaRef} className={fadeOut ? 'fade-out' : ''}></div>
         {showLogo && (
-          <div 
-            className={`intro-logo ${hasAnimated ? 'no-initial-animation' : ''} ${fadeOut ? 'fade-out' : ''}`}
-            onClick={handleLogoClick}
-          >
-            JS
+          <div className={`intro-logo-wrapper ${fadeOut ? 'fade-out' : ''}`}>
+            <div 
+              className={`intro-logo ${hasAnimated ? 'no-initial-animation' : ''}`}
+              onClick={handleLogoClick}
+            >
+              JS
+            </div>
+            
+            <div className="click-indicator left">
+              <span className="click-text">Click!</span>
+              <div className="curved-arrow-intro">
+                <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M 10 30 Q 30 25, 45 30" />
+                  <polygon className="arrow-head" points="45,25 50,30 45,35" />
+                </svg>
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -208,6 +221,9 @@ function IntroPage({ startAnimation }) {
 
           {/* Projects Content */}
           <Projects isVisible={showHomeContent && currentPage === 'projects' && !isTransitioning} />
+
+          {/* About Content */}
+          <About isVisible={showHomeContent && currentPage === 'about' && !isTransitioning} />
         </Suspense>
 
         {/* Close Button (Only on Home) */}
