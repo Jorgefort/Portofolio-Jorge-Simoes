@@ -346,32 +346,48 @@ body::-webkit-scrollbar,
   height: 100%;
   z-index: 1; /* Above background, below content */
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 1s ease;
+  /* Opacity handled by children for independent animations */
 }
 
 .kanji-layer.visible {
-  opacity: 1;
+  /* Container stays visible to allow children to animate */
 }
 
 .kanji-left {
   position: absolute;
   left: 2%;
   top: 60%;
-  transform: translateY(-50%);
   height: 75vh;
   width: auto;
   object-fit: contain;
+  /* Start state: Offscreen Down */
+  transform: translateY(100vh);
+  opacity: 0;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
 }
 
 .kanji-right {
   position: absolute;
   right: 2%;
   top: 40%;
-  transform: translateY(-50%);
   height: 75vh;
   width: auto;
   object-fit: contain;
+  /* Start state: Offscreen Up */
+  transform: translateY(-100vh);
+  opacity: 0;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+}
+
+/* Active State - Bring them in */
+.kanji-layer.visible .kanji-left {
+  transform: translateY(-50%);
+  opacity: 1;
+}
+
+.kanji-layer.visible .kanji-right {
+  transform: translateY(-50%);
+  opacity: 1;
 }
 
 .home-content {
@@ -589,7 +605,7 @@ body::-webkit-scrollbar,
   display: flex;
   justify-content: flex-start; /* Align to left */
   align-items: center;
-  padding-left: 5%; /* Add some spacing from left edge */
+  padding-left: 15%; /* Add some spacing from left edge */
   opacity: 0;
   transition: opacity 0.5s ease;
   pointer-events: none;
@@ -1242,7 +1258,8 @@ body::-webkit-scrollbar,
     height: 320px;
   }
   
-  .kanji-left, .kanji-right {
+  .kanji-layer.visible .kanji-left, 
+  .kanji-layer.visible .kanji-right {
     opacity: 0.2; /* Fade kanji more on mobile */
   }
 }

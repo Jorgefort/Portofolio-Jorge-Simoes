@@ -7,10 +7,15 @@ const IntroPage = lazy(() => import('./IntroPage'));
 const CustomCursor = lazy(() => import('./CustomCursor'));
 
 function App() {
-  const [isLoading, setIsLoading] = useState(false);
+  // Check session storage to see if we've already shown the loading screen
+  const [isLoading, setIsLoading] = useState(() => {
+    const hasLoaded = sessionStorage.getItem('portfolioLoaded');
+    return !hasLoaded;
+  });
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
+    sessionStorage.setItem('portfolioLoaded', 'true');
   };
 
   return (
