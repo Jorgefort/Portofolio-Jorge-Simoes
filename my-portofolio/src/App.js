@@ -7,7 +7,7 @@ const IntroPage = lazy(() => import('./IntroPage'));
 const CustomCursor = lazy(() => import('./CustomCursor'));
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLoadingComplete = () => {
     setIsLoading(false);

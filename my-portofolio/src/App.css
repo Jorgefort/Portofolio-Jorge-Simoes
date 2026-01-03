@@ -19,9 +19,7 @@ img {
   -webkit-user-drag: none;
   -khtml-user-drag: none;
   -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;
-  pointer-events: none; /* Prevents right-click context menu on images too */
+
 }
 
 /* Re-enable pointer events for images that need interaction (like the logo link wrapper handles the click, so img can be none) */
@@ -323,7 +321,7 @@ body::-webkit-scrollbar,
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.95); /* Very slight transparency */
+  background-color: #0B0B0B;
   z-index: 50;
   opacity: 0;
   pointer-events: none;
@@ -337,6 +335,43 @@ body::-webkit-scrollbar,
 .home-page.visible {
   opacity: 1;
   pointer-events: auto;
+}
+
+/* --- Kanji Background Layer --- */
+.kanji-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Above background, below content */
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.kanji-layer.visible {
+  opacity: 1;
+}
+
+.kanji-left {
+  position: absolute;
+  left: 2%;
+  top: 60%;
+  transform: translateY(-50%);
+  height: 75vh;
+  width: auto;
+  object-fit: contain;
+}
+
+.kanji-right {
+  position: absolute;
+  right: 2%;
+  top: 40%;
+  transform: translateY(-50%);
+  height: 75vh;
+  width: auto;
+  object-fit: contain;
 }
 
 .home-content {
@@ -390,7 +425,7 @@ body::-webkit-scrollbar,
 
 /* Adjust Home Page */
 .home-page {
-  background-color: #2D2E2C;
+  background-color: #0B0B0B;
 }
 
 .home-content {
@@ -405,6 +440,8 @@ body::-webkit-scrollbar,
   align-items: center;
   transition: opacity 0.5s ease, transform 0.5s ease;
   pointer-events: none;
+  position: relative;
+  z-index: 2;
 }
 
 .home-content.visible {
@@ -976,3 +1013,244 @@ body::-webkit-scrollbar,
     opacity: 0;
   }
 }
+
+
+/* Black Overlay */
+.black-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75); /* 75% transparent black */
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Ensure particles are visible */
+.particles-container {
+  z-index: 3;
+}
+
+/* Main Design Container */
+.main-design-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index: 10; /* Above overlay */
+}
+
+/* Profile Picture Frame */
+.profile-section {
+  margin-bottom: 40px;
+}
+
+.profile-frame {
+  width: 300px; /* Adjust size */
+  height: 350px; /* Rectangular portrait or square? User said "black square". I'll make it square or slightly portrait. Let's stick to square as requested "black square". */
+  width: 300px;
+  height: 300px;
+  background-color: #000000;
+  border: 1px solid #B4AC97; /* Goldish border */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+  position: relative;
+}
+
+.profile-frame::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid rgba(180, 172, 151, 0.3);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.profile-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  filter: grayscale(20%) contrast(110%);
+  transition: all 0.5s ease;
+}
+
+.profile-frame:hover img {
+    filter: grayscale(0%) contrast(100%);
+    transform: scale(1.05);
+}
+
+/* Text Section */
+.text-section {
+  text-align: center;
+  z-index: 10;
+}
+
+.main-title {
+  font-family: 'Xanh Mono', monospace;
+  font-style: italic;
+  font-size: 5rem; /* Adjust size */
+  color: #B4AC97;
+  margin-bottom: 15px;
+  letter-spacing: -2px;
+  font-weight: 400;
+  text-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.mini-text {
+  font-family: 'Aboreto', cursive;
+  font-size: 1rem;
+  color: #B4AC97;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+
+  
+  .profile-frame {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .mini-text {
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+  }
+}
+
+
+
+/* Ensure particles are visible above overlay if desired, or below? 
+   User said "dark layer on top... only affect the kanji text".
+   If particles are part of the "background", they should be below the overlay.
+   Currently particles-container is in intro-background.
+   Let's check z-index of particles-container.
+*/
+.particles-container {
+  z-index: 3; /* Above overlay (2) to keep them visible? Or below? 
+                 Usually particles look better if they are not dimmed too much.
+                 Let's keep them at 3 for now. */
+}
+
+/* --- New About Page Design --- */
+
+.about-content-new {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  max-width: 1200px;
+  gap: 50px;
+  z-index: 10; /* Above overlay */
+  position: relative;
+}
+
+.about-text-column {
+  flex: 1;
+  text-align: left;
+  color: #B4AC97;
+}
+
+.about-title-new {
+  font-family: 'Xanh Mono', monospace;
+  font-style: italic;
+  font-size: 4rem;
+  margin-bottom: 30px;
+  font-weight: 400;
+  letter-spacing: -1px;
+  color: #B1A891; /* Updated color */
+}
+
+.about-subtitle-list {
+  font-family: 'Aboreto', cursive;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-transform: uppercase;
+  color: #B4AC97; /* Updated color */
+}
+
+.about-bio-new {
+  font-family: 'Aboreto', cursive;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  max-width: 500px;
+  color: #B4AC97; /* Updated color */
+}
+
+.about-image-column {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-image-frame {
+  width: 450px;
+  height: 550px; /* Portrait aspect ratio */
+  background-color: #000000;
+  border: 1px solid #333; /* Subtle border */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.about-image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .about-content-new {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .about-text-column {
+    text-align: center;
+  }
+
+  .about-title-new {
+    font-size: 3rem;
+  }
+
+  .about-image-frame {
+    width: 250px;
+    height: 320px;
+  }
+  
+  .kanji-left, .kanji-right {
+    opacity: 0.2; /* Fade kanji more on mobile */
+  }
+}
+
+.particles-container {
+  z-index: 3; /* Above overlay (2) to keep them visible? Or below? 
+                 Usually particles look better if they are not dimmed too much.
+                 Let's keep them at 3 for now. */
+}
+
+

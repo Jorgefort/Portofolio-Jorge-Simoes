@@ -1,18 +1,28 @@
 import React from 'react';
+import profileImg from './pictureme.jpg';
 
 const About = ({ isVisible }) => {
   return (
     <div className={`about-page ${isVisible ? 'visible' : ''}`}>
-      <div className="about-content">
-        <h1 className="about-name">Jorge Simoes</h1>
-        <h2 className="about-subtitle">student software development / grafisch lyceum rotterdam</h2>
-        
-        <div className="about-details">
-          <p>student software development</p>
-          <p>born in 2007</p>
-          <p className="about-bio">
-            I have worked mostly with css html js due to my current school but on my own find mself focusing on new languages like: tailwind css reactjs and python.
+      <div className="about-content-new">
+        <div className="about-text-column">
+          <h1 className="about-title-new">Jorge Simoes</h1>
+          
+          <div className="about-subtitle-list">
+            <p>STUDENT SOFTWARE DEVELOPMENT</p>
+            <p>UI/UX ENTHUSIAST</p>
+            <p>ASPIRING FRONT END ENGINEER</p>
+          </div>
+          
+          <p className="about-bio-new">
+            HI, IM JORGE SIMOES. I LOVE SWEETS AND BEING COMFORTABLE. I FIND MYSELF QUITE HAPPY THAT YOU HAVE DECIDED TO ENTER MY PROJECT WEBSITE, I PUT ALOT OF EFFORT INTO ITS CREATION.
           </p>
+        </div>
+        
+        <div className="about-image-column">
+          <div className="about-image-frame">
+            <img src={profileImg} alt="Jorge Simoes" />
+          </div>
         </div>
       </div>
     </div>

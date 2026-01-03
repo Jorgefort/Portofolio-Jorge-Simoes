@@ -2,6 +2,8 @@
 import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import Vara from 'vara';
 import bgImage from './background.webp';
+import kanLeft from './kanleft.png';
+import kanRight from './kanright.png';
 
 // Lazy load heavy components
 const CircularNav = lazy(() => import('./CircularNav'));
@@ -212,6 +214,12 @@ function IntroPage({ startAnimation }) {
       </div>
       <div className={`home-page ${showHomePage ? 'visible' : ''}`}>
         
+        {/* Kanji Background Layer - Hidden on Home (Cube) page */}
+        <div className={`kanji-layer ${showHomePage && currentPage !== 'home' ? 'visible' : ''}`}>
+          <img src={kanLeft} className="kanji-left" alt="" />
+          <img src={kanRight} className="kanji-right" alt="" />
+        </div>
+
         {/* Home Content */}
         <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
           <div className={`home-content ${showHomeContent && currentPage === 'home' && !isTransitioning ? 'visible' : ''}`}>
