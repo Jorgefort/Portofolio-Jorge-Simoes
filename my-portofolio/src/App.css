@@ -252,20 +252,24 @@ body::-webkit-scrollbar,
 .click-indicator {
   position: absolute;
   right: 100%; /* Position to the left of the logo */
-  top: 50%;
+  top: 40%; /* Moved up a notch from 50% */
   transform: translateY(-50%);
   display: flex;
   align-items: center;
   gap: 10px;
   margin-right: 20px; /* Space between arrow and logo */
-  opacity: 1;
-  transition: opacity 0.3s ease;
+  opacity: 0; /* Start hidden */
+  transition: opacity 1s ease; /* Smooth fade in */
   pointer-events: none;
   white-space: nowrap;
 }
 
+.click-indicator.visible {
+  opacity: 1;
+}
+
 .intro-logo:hover + .click-indicator {
-  opacity: 0;
+  opacity: 0 !important; /* Ensure it hides on hover */
 }
 
 .click-text {
@@ -278,8 +282,8 @@ body::-webkit-scrollbar,
 }
 
 .curved-arrow-intro {
-  width: 50px;
-  height: 50px;
+  width: 25px; /* Reduced further */
+  height: 25px;
 }
 
 .curved-arrow-intro svg {
@@ -1183,16 +1187,17 @@ body::-webkit-scrollbar,
 .about-title-new {
   font-family: 'Xanh Mono', monospace;
   font-style: italic;
-  font-size: 4rem;
+  font-size: 7rem; /* Increased size */
   margin-bottom: 30px;
   font-weight: 400;
   letter-spacing: -1px;
   color: #B1A891; /* Updated color */
+  white-space: nowrap; /* Prevent wrapping */
 }
 
 .about-subtitle-list {
   font-family: 'Aboreto', cursive;
-  font-size: 1.2rem;
+  font-size: 1rem; /* Reduced size */
   letter-spacing: 2px;
   margin-bottom: 40px;
   display: flex;
@@ -1202,9 +1207,33 @@ body::-webkit-scrollbar,
   color: #B4AC97; /* Updated color */
 }
 
+.about-subtitle-list p {
+  position: relative;
+  width: fit-content;
+  cursor: pointer; /* Indicate interactivity */
+}
+
+.about-subtitle-list p::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: auto;
+  right: 0;
+  width: 0;
+  height: 1px;
+  background-color: #B4AC97;
+  transition: width 0.3s ease;
+}
+
+.about-subtitle-list p:hover::after {
+  width: 100%;
+  left: 0;
+  right: auto;
+}
+
 .about-bio-new {
   font-family: 'Aboreto', cursive;
-  font-size: 1.1rem;
+  font-size: 0.75rem; /* Reduced more than subtitle */
   line-height: 1.8;
   letter-spacing: 1px;
   text-transform: uppercase;

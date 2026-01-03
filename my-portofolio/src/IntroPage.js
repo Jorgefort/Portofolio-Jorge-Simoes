@@ -23,6 +23,7 @@ function IntroPage({ startAnimation }) {
   const [currentPage, setCurrentPage] = useState('home'); // 'home', 'projects', 'about', 'contact'
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [contentVisible, setContentVisible] = useState(false);
+  const [showClickIndicator, setShowClickIndicator] = useState(false);
 
   useEffect(() => {
     if (startAnimation && varaRef.current && !varaInitialized.current) {
@@ -56,6 +57,10 @@ function IntroPage({ startAnimation }) {
       setTimeout(() => {
         setShowLogo(true);
       }, 3500);
+
+      setTimeout(() => {
+        setShowClickIndicator(true);
+      }, 4500);
     }
   }, [startAnimation]);
 
@@ -200,7 +205,7 @@ function IntroPage({ startAnimation }) {
               JS
             </div>
             
-            <div className="click-indicator left">
+            <div className={`click-indicator left ${showClickIndicator ? 'visible' : ''}`}>
               <span className="click-text">Click!</span>
               <div className="curved-arrow-intro">
                 <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
