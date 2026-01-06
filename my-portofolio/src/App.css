@@ -75,22 +75,16 @@ body::-webkit-scrollbar,
   align-items: center;
   justify-content: center;
   z-index: 9999;
+  transition: opacity 1s ease-out; /* Smooth fade out */
+  opacity: 1;
 }
 
-.loading-curtain {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 0%;
-  background-color: #2D2E2C; /* Match intro page bg */
-  z-index: 10000;
-  transition: height 1.2s cubic-bezier(0.65, 0, 0.35, 1); /* Slower rise */
+.loading-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
 }
 
-.loading-curtain.active {
-  height: 100%;
-}
+/* Removed curtain styles */
 
 .loading-content {
   position: relative;
@@ -99,12 +93,7 @@ body::-webkit-scrollbar,
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 9999; /* Lower than curtain (10000) so curtain covers it */
-}
-
-.loading-content.fade-content {
-  opacity: 0;
-  transition: opacity 0.4s ease;
+  z-index: 9999;
 }
 
 .cat-spinner-container {
@@ -122,6 +111,11 @@ body::-webkit-scrollbar,
   object-fit: contain;
   animation: spinCycle 2.5s cubic-bezier(0.45, 0, 0.55, 1) infinite; /* Slightly slower for elegance */
   animation-delay: 0.3s;
+}
+
+.cat-spinner.stopped {
+  animation: none;
+  transform: rotate(0deg);
 }
 
 @keyframes spinCycle {
@@ -144,7 +138,7 @@ body::-webkit-scrollbar,
   height: 100vh;
   position: relative;
   overflow: hidden;
-  background-color: #2D2E2C; /* Match home page background */
+  background-color: #0B0B0B;
 }
 
 .intro-background {
@@ -1300,3 +1294,109 @@ body::-webkit-scrollbar,
 }
 
 
+
+/* --- Consolidated Mobile Responsive Styles --- */
+
+@media screen and (max-width: 768px) {
+  /* General Fixes */
+  .App {
+    overflow-x: hidden;
+    width: 100vw;
+  }
+
+  /* Intro Page */
+  .intro-page {
+    height: 100vh;
+    padding-bottom: 80px; /* Space for nav */
+  }
+
+  .home-content {
+    padding: 20px;
+    margin-top: -50px; /* Pull up to avoid nav overlap */
+  }
+
+  .welcome-text {
+    font-size: 3rem !important;
+    text-align: center;
+  }
+  
+  /* Cube Adjustment */
+  .cube-canvas-container {
+      height: 40vh !important;
+  }
+
+  /* Kanji Layer - Reduce obstruction */
+  .kanji-left, .kanji-right {
+    opacity: 0.1 !important;
+    width: 80vw !important;
+    max-width: none !important;
+  }
+  
+  .kanji-left {
+      left: -20% !important;
+  }
+  
+  .kanji-right {
+      right: -20% !important;
+  }
+
+  /* Projects Page */
+  .projects-container {
+    width: 95%;
+    padding-bottom: 150px; /* Space for circular nav */
+  }
+  
+  .project-row {
+      padding: 15px 10px;
+  }
+  
+  .project-col.name {
+      font-size: 1.5rem;
+  }
+  
+  .project-col.id, .project-col.tech, .project-col.year {
+      /* Hide details on very small screens if crowded, or stack them */
+      font-size: 0.8rem;
+  }
+
+  /* About Page */
+  .about-content-new {
+    width: 95%;
+    gap: 20px;
+    padding-bottom: 120px;
+  }
+
+  .about-title-new {
+    font-size: 3rem; /* Force smaller size */
+    white-space: normal; /* Allow wrapping */
+  }
+
+  .about-image-frame {
+    width: 80vw;
+    height: 80vw;
+    max-width: 300px;
+    max-height: 300px;
+  }
+  
+  .about-subtitle-list {
+      align-items: center;
+  }
+  
+  .about-bio-new {
+      text-align: center;
+      padding: 0 10px;
+  }
+
+  /* Circular Nav Positioning - Ensure it stays at bottom center */
+  .circular-nav-container {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+  }
+
+  .nav-link text {
+      font-size: 24px; /* Smaller text on ring */
+  }
+}

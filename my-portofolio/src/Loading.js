@@ -3,7 +3,7 @@ import catImg from './catpaint.png';
 
 function Loading({ onLoadingComplete }) {
   const [progress, setProgress] = useState(0);
-  const [startTransition, setStartTransition] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false);
 
   useEffect(() => {
     const interval = 40;
@@ -18,8 +18,17 @@ function Loading({ onLoadingComplete }) {
           if (next >= 100) {
             clearInterval(timer);
             setProgress(100);
-            setTimeout(() => setStartTransition(true), 500);
-            setTimeout(() => onLoadingComplete(), 1500);
+            
+            // Start fade out after a short pause
+            setTimeout(() => {
+              setIsFadingOut(true);
+            }, 500);
+            
+            // Unmount after fade out completes
+            setTimeout(() => {
+              onLoadingComplete();
+            }, 1500);
+            
             return 100;
           }
           return next;
@@ -34,9 +43,8 @@ function Loading({ onLoadingComplete }) {
   }, [onLoadingComplete]);
 
   return (
-    <div className="loading-screen">
-      <div className={`loading-curtain ${startTransition ? 'active' : ''}`} />
-      <div className={`loading-content ${startTransition ? 'fade-content' : ''}`}>
+    <div className={`loading-screen ${isFadingOut ? 'fade-out' : ''}`}>
+      <div className="loading-content">
         <div className="cat-spinner-container">
           <img src={catImg} alt="Loading Cat" className="cat-spinner" />
         </div>
