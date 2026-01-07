@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import './App.css';
 
 // Lazy load components to reduce initial bundle size
@@ -13,18 +13,54 @@ function App() {
     return !hasLoaded;
   });
 
+  const [theme, setTheme] = useState('dark');
+  const [isContentVisible, setIsContentVisible] = useState(!isLoading);
+
+  useEffect(() => {
+    document.body.className = theme === 'light' ? 'light-mode' : '';
+  }, [theme]);
+
   const handleLoadingComplete = () => {
     setIsLoading(false);
-    sessionStorage.setItem('portfolioLoaded', 'true');
+    // Add a small delay to ensure strict sequence: Loading Gone -> Then Content Fade In
+    setTimeout(() => {
+      setIsContentVisible(true);
+      sessionStorage.setItem('portfolioLoaded', 'true');
+    }, 100); 
+  };
+
+  const toggleTheme = () => {
+    if (!isContentVisible) return;
+    
+    // 1. Fade OUT content (accelerated)
+    setIsContentVisible(false);
+
+    // 2. Wait for fade out (300ms), then switch theme
+    setTimeout(() => {
+        setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+        
+        // 3. Fade IN content
+        setTimeout(() => {
+            setIsContentVisible(true); 
+        }, 50);
+    }, 300);
   };
 
   return (
     <div className="App">
-      <Suspense fallback={<div />}>
-        <CustomCursor />
-        {isLoading && <Loading onLoadingComplete={handleLoadingComplete} />}
-        <IntroPage startAnimation={!isLoading} />
-      </Suspense>
+      <div className={`main-content ${isContentVisible ? 'visible' : ''}`}>
+        <Suspense fallback={<div />}>
+          <CustomCursor />
+          {/* Pass theme to IntroPage so it can pass it to Cube3D, and toggleTheme for controls */}
+          <IntroPage startAnimation={isContentVisible} theme={theme} toggleTheme={toggleTheme} />
+        </Suspense>
+      </div>
+      
+      {isLoading && (
+        <Suspense fallback={null}>
+            <Loading onLoadingComplete={handleLoadingComplete} />
+        </Suspense>
+      )}
     </div>
   );
 }

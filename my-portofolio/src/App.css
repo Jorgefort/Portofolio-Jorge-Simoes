@@ -30,6 +30,7 @@ html, body {
   background-color: #000000;
   overflow-x: hidden;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: color 0.3s ease; /* Removed background-color transition */
 }
 
 /* --- Custom Cursor --- */
@@ -75,7 +76,7 @@ body::-webkit-scrollbar,
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  transition: opacity 1s ease-out; /* Smooth fade out */
+  transition: opacity 0.5s ease-out; /* FASTER fade out */
   opacity: 1;
 }
 
@@ -342,14 +343,12 @@ body::-webkit-scrollbar,
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1; /* Above background, below content */
+  z-index: 2; /* Above overlay (1) */
   pointer-events: none;
   /* Opacity handled by children for independent animations */
 }
 
-.kanji-layer.visible {
-  /* Container stays visible to allow children to animate */
-}
+/* .kanji-layer.visible removed to avoid empty ruleset error */
 
 .kanji-left {
   position: absolute;
@@ -385,6 +384,23 @@ body::-webkit-scrollbar,
 
 .kanji-layer.visible .kanji-right {
   transform: translateY(-50%);
+  opacity: 1;
+}
+
+.dark-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75); /* 75% transparent black */
+  z-index: 1; /* Below Kanji (2) */
+  opacity: 0;
+  transition: opacity 1s ease;
+  pointer-events: none;
+}
+
+.dark-overlay.visible {
   opacity: 1;
 }
 
@@ -1399,4 +1415,167 @@ body::-webkit-scrollbar,
   .nav-link text {
       font-size: 24px; /* Smaller text on ring */
   }
+}
+
+/* --- Top Controls (Assets Only) --- */
+.top-controls {
+  position: absolute; /* Changed to absolute to stay within main-content relative flow if needed, or fixed if we want it overlaying intro page specifically */
+  position: fixed; /* Keeping fixed is safer for top-right corner regardless of scroll */
+  top: 30px;
+  right: 30px;
+  display: flex;
+  gap: 20px;
+  z-index: 999; 
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease; /* Animate fade out/in */
+}
+
+.top-controls.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.control-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+  opacity: 1; 
+}
+
+/* --- Main Content Transition Wrapper --- */
+.main-content {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out; 
+  width: 100%;
+  height: 100%;
+}
+
+.main-content.visible {
+  opacity: 1;
+}
+
+/* --- Buttons & Dropdown Functionality --- */
+button.theme-toggle,
+button.lang-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: none !important; /* Use custom cursor */
+  pointer-events: auto;
+  display: block;
+}
+
+button:focus {
+    outline: none;
+}
+
+
+/* Language Dropdown */
+.lang-dropdown {
+  position: absolute;
+  top: 40px; 
+  left: 0; 
+  background-color: rgba(10, 10, 10, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 100px;
+  z-index: 999999;
+}
+
+.lang-dropdown a {
+  color: #ccc;
+  text-decoration: none;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: block;
+}
+
+.lang-dropdown a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+
+/* --- Light Mode Overrides --- */
+body.light-mode {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+body.light-mode .App, 
+body.light-mode .intro-page,
+body.light-mode .home-page,
+body.light-mode .intro-background {
+  background-color: #ffffff !important;
+}
+
+/* Light Overlay for Light Mode */
+body.light-mode .dark-overlay {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+
+/* Text Colors in Light Mode */
+body.light-mode p, 
+body.light-mode h1, 
+body.light-mode h2, 
+body.light-mode h3, 
+body.light-mode h4, 
+body.light-mode h5, 
+body.light-mode h6,
+body.light-mode span,
+body.light-mode li,
+body.light-mode .about-bio-new,
+body.light-mode .about-title-new,
+body.light-mode .welcome-text,
+body.light-mode .project-title,
+body.light-mode .project-description {
+  color: #000000 !important;
+}
+
+/* About Me Image Border */
+body.light-mode .about-image-frame {
+    border-color: #000000 !important; 
+    box-shadow: 0 0 0 1px #000000; /* Fallback if using shadow */
+}
+
+/* Circular Nav Text in Light Mode */
+body.light-mode .nav-link text {
+    fill: #000000 !important;
+    text-shadow: none !important; 
+    filter: none !important;
+}
+
+
+/* --- Theme Transition Overlay --- */
+/* Removed */
+
+
+body.light-mode .lang-dropdown {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+body.light-mode .lang-dropdown a {
+    color: #333;
+}
+body.light-mode .lang-dropdown a:hover {
+    background-color: rgba(0,0,0,0.05);
+    color: #000;
+}
+
+/* Custom Cursor in Light Mode */
+body.light-mode .custom-cursor {
+    border-color: #000000;
 }

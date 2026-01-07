@@ -2,7 +2,7 @@ import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-const Cube = () => {
+const Cube = ({ theme }) => {
   const meshRef = useRef();
 
   useFrame((state, delta) => {
@@ -17,7 +17,7 @@ const Cube = () => {
   
   const size = 3.5;
   const divisions = 4;
-  const color = "#B4AC97";
+  const color = theme === 'light' ? '#000000' : '#B4AC97';
   const half = size / 2;
 
   return (
@@ -32,18 +32,18 @@ const Cube = () => {
       
       {/* The dots at vertices */}
       <points geometry={geometry}>
-        <pointsMaterial color="#B4AC97" size={0.15} sizeAttenuation={true} />
+        <pointsMaterial color={color} size={0.15} sizeAttenuation={true} />
       </points>
     </group>
   );
 };
 
-const Cube3D = () => {
+const Cube3D = ({ theme }) => {
   return (
     <div className="cube-container">
       <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 11], fov: 45 }} gl={{ antialias: true }}>
         <ambientLight intensity={0.5} />
-        <Cube />
+        <Cube theme={theme} />
       </Canvas>
     </div>
   );

@@ -22,12 +22,12 @@ function Loading({ onLoadingComplete }) {
             // Start fade out after a short pause
             setTimeout(() => {
               setIsFadingOut(true);
-            }, 500);
+            }, 200); // reduced from 500
             
             // Unmount after fade out completes
             setTimeout(() => {
               onLoadingComplete();
-            }, 1500);
+            }, 700); // 200 + 500 (transition) = 700
             
             return 100;
           }
