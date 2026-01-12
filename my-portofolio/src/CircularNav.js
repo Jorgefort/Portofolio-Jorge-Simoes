@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import logo from './logoo.png.png';
+import lightLogo from './logoblack.png';
 
-const CircularNav = ({ onNavigate, activePage }) => {
+const CircularNav = ({ onNavigate, activePage, theme }) => {
   const [isPaused, setIsPaused] = useState(false);
 
   const handleNavClick = (e, page) => {
@@ -80,7 +81,7 @@ const CircularNav = ({ onNavigate, activePage }) => {
         className={`center-logo-link ${activePage === 'home' ? 'active' : ''}`} 
         onClick={(e) => handleNavClick(e, 'home')}
       >
-        <img src={logo} alt="JS Logo" className="center-logo" />
+        <img src={theme === 'light' ? lightLogo : logo} alt="JS Logo" className="center-logo" />
       </a>
     </div>
   );

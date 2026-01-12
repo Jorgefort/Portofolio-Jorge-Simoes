@@ -13,11 +13,12 @@ function App() {
     return !hasLoaded;
   });
 
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
   const [isContentVisible, setIsContentVisible] = useState(!isLoading);
 
   useEffect(() => {
     document.body.className = theme === 'light' ? 'light-mode' : '';
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   const handleLoadingComplete = () => {

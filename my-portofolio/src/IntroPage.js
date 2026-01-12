@@ -83,20 +83,22 @@ function IntroPage({ theme, toggleTheme }) { // Accept theme & toggleTheme prop
 
         {/* TOP CONTROLS - ONLY VISIBLE ON HOME */}
         <div className={`top-controls ${currentPage === 'home' && !isTransitioning ? 'visible' : ''}`}>
-            <button className="lang-toggle" onClick={toggleLangDropdown} aria-label="Select Language">
-                    <img 
-                        src={theme === 'dark' ? whiteglobeb : blackglobe} 
-                        alt="Language Selector" 
-                        className="control-icon"
-                    />
-            </button>
-            {langDropdownOpen && (
-                <div className="lang-dropdown">
-                    <a href="?lang=en" onClick={() => handleLangSelect('en')}>English</a>
-                    <a href="?lang=pt" onClick={() => handleLangSelect('pt')}>Português</a>
-                    <a href="?lang=es" onClick={() => handleLangSelect('es')}>Español</a>
-                </div>
-            )}
+            <div className="lang-wrapper" style={{ position: 'relative' }}>
+                <button className="lang-toggle" onClick={toggleLangDropdown} aria-label="Select Language">
+                        <img 
+                            src={theme === 'dark' ? whiteglobeb : blackglobe} 
+                            alt="Language Selector" 
+                            className="control-icon"
+                        />
+                </button>
+                {langDropdownOpen && (
+                    <div className="lang-dropdown">
+                        <a href="?lang=en" onClick={() => handleLangSelect('en')}>English</a>
+                        <a href="?lang=pt" onClick={() => handleLangSelect('pt')}>Português</a>
+                        <a href="?lang=es" onClick={() => handleLangSelect('es')}>Español</a>
+                    </div>
+                )}
+            </div>
 
             <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle Theme">
                     <img 
@@ -124,7 +126,7 @@ function IntroPage({ theme, toggleTheme }) { // Accept theme & toggleTheme prop
         {/* Navigation */}
         <Suspense fallback={<div />}>
           <div style={{ opacity: 1, transition: 'opacity 1s ease', pointerEvents: 'auto' }}>
-            <CircularNav onNavigate={handleNavigation} activePage={currentPage} />
+            <CircularNav onNavigate={handleNavigation} activePage={currentPage} theme={theme} />
           </div>
         </Suspense>
       </div>

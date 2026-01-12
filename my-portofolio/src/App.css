@@ -1475,35 +1475,55 @@ button:focus {
 /* Language Dropdown */
 .lang-dropdown {
   position: absolute;
-  top: 40px; 
-  left: 0; 
-  background-color: rgba(10, 10, 10, 0.9);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 8px;
+  top: 100%; 
+  left: 50%; 
+  transform: translateX(-50%);
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  border-radius: 0;
+  padding: 10px 0;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  align-items: center;
+  gap: 8px;
   min-width: 100px;
   z-index: 999999;
+  margin-top: 5px;
 }
 
 .lang-dropdown a {
-  color: #ccc;
+  color: #B4AC97;
   text-decoration: none;
   font-family: "Inter", sans-serif;
   font-size: 14px;
-  padding: 5px 8px;
-  border-radius: 4px;
+  padding: 2px 0;
   transition: all 0.2s;
-  display: block;
+  display: inline-block;
+  position: relative;
+  background-color: transparent;
+}
+
+/* Reutilize underline effect */
+.lang-dropdown a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #B4AC97;
+  transition: width 0.3s ease;
 }
 
 .lang-dropdown a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background-color: transparent;
+  color: #B4AC97;
+}
+
+.lang-dropdown a:hover::after {
+  width: 100%;
 }
 
 
@@ -1563,19 +1583,70 @@ body.light-mode .nav-link text {
 
 
 body.light-mode .lang-dropdown {
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
 }
 body.light-mode .lang-dropdown a {
-    color: #333;
+    color: #000000;
+}
+body.light-mode .lang-dropdown a::after {
+    background-color: #000000;
 }
 body.light-mode .lang-dropdown a:hover {
-    background-color: rgba(0,0,0,0.05);
-    color: #000;
+    background-color: transparent;
+    color: #000000;
 }
 
 /* Custom Cursor in Light Mode */
 body.light-mode .custom-cursor {
+    background-color: #000000;
     border-color: #000000;
+}
+
+/* Projects Page Light Mode */
+body.light-mode .project-row {
+    color: #000000 !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+body.light-mode .project-row:first-child {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* Force all list content to be strictly black and opaque */
+body.light-mode .project-row .project-col, 
+body.light-mode .project-row .project-col.id,
+body.light-mode .project-row .project-col.name,
+body.light-mode .project-row .project-col.tech,
+body.light-mode .project-row .project-col.year {
+    color: #000000 !important;
+    opacity: 1 !important;
+}
+
+body.light-mode .project-row:hover {
+    color: #000000 !important;
+    background-color: rgba(0, 0, 0, 0.05); /* Subtle smooth highlight */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+/* Ensure hover text stays black */
+body.light-mode .project-row:hover .project-col,
+body.light-mode .project-row:hover .project-col.id,
+body.light-mode .project-row:hover .project-col.name,
+body.light-mode .project-row:hover .project-col.tech,
+body.light-mode .project-row:hover .project-col.year {
+    color: #000000 !important;
+}
+
+body.light-mode .scroll-text {
+    color: #000000 !important;
+}
+
+body.light-mode .curved-arrow svg path {
+    stroke: #000000;
+}
+
+body.light-mode .arrow-head {
+    fill: #000000;
 }
