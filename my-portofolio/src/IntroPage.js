@@ -18,25 +18,19 @@ function IntroPage({ theme, toggleTheme }) { // Accept theme & toggleTheme prop
   const [currentPage, setCurrentPage] = useState('home'); // 'home', 'projects', 'about', 'contact'
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+  const [kanjiEnabled, setKanjiEnabled] = useState(true);
 
   useEffect(() => {
     let timeoutId;
-    let intervalId;
 
     if (currentPage === 'home') {
-      // Wait 1 second before starting to type
+      // Wait 1 second before starting the animation
       timeoutId = setTimeout(() => {
-        const text = "Welcome";
-        let currentIndex = 0;
-        
-        intervalId = setInterval(() => {
-          if (currentIndex <= text.length) {
-            setWelcomeText(text.slice(0, currentIndex));
-            currentIndex++;
-          } else {
-            clearInterval(intervalId);
-          }
-        }, 200); // Typing speed
+        setWelcomeText(
+          <span className="welcome-letter">
+            Jorge Simoes
+          </span>
+        );
       }, 1000);
     } else {
       setWelcomeText('');
@@ -44,7 +38,6 @@ function IntroPage({ theme, toggleTheme }) { // Accept theme & toggleTheme prop
 
     return () => {
       clearTimeout(timeoutId);
-      clearInterval(intervalId);
     };
   }, [currentPage]);
 
@@ -68,12 +61,16 @@ function IntroPage({ theme, toggleTheme }) { // Accept theme & toggleTheme prop
     window.location.reload(); 
   };
 
+  const toggleKanji = () => {
+    setKanjiEnabled(!kanjiEnabled);
+  };
+
   return (
     <section className="intro-page">
       <div className="home-page visible">
         
-        {/* Kanji Background Layer - Hidden on Home (Cube) page */}
-        <div className={`kanji-layer ${currentPage !== 'home' ? 'visible' : ''}`}>
+        {/* Kanji Background Layer - Hidden on Home (Cube) page, and toggled by user */}
+        <div className={`kanji-layer ${currentPage !== 'home' && kanjiEnabled ? 'visible' : ''}`}>
           <img src={kanLeft} className="kanji-left" alt="" />
           <img src={kanRight} className="kanji-right" alt="" />
         </div>
@@ -99,6 +96,19 @@ function IntroPage({ theme, toggleTheme }) { // Accept theme & toggleTheme prop
                     </div>
                 )}
             </div>
+
+            <button className="kanji-toggle" onClick={toggleKanji} aria-label="Toggle Kanji Background">
+                <span className="control-text-icon" style={{ 
+                    fontFamily: "'Zen Old Mincho', serif", 
+                    fontSize: '22px', 
+                    lineHeight: '24px',
+                    color: theme === 'dark' ? '#fff' : '#000',
+                    fontWeight: 'bold',
+                    opacity: kanjiEnabled ? 1 : 0.4
+                }}>
+                    字
+                </span>
+            </button>
 
             <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle Theme">
                     <img 

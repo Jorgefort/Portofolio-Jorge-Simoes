@@ -186,7 +186,7 @@ const Projects = ({ isVisible }) => {
       <div className={`scroll-indicator ${!showScrollIndicator ? 'hidden' : ''}`}>
         <div className="curved-arrow">
           <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 50 30 Q 30 55, 15 30" />
+            <path d="M 50 30 Q 30 10, 15 30" />
             <polygon className="arrow-head" points="15,25 10,30 15,35" />
           </svg>
         </div>

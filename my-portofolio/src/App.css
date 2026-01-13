@@ -486,17 +486,35 @@ body::-webkit-scrollbar,
   color: #B4AC97;
   font-size: 60px;
   margin-top: -50px; /* Pull it up a bit closer to the cube if needed, or adjust Cube3D height */
-  min-height: 90px; /* Prevent layout shift */
-  text-align: center;
+  height: 100px; /* Fixed height to prevent layout shift */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-letter {
+  display: inline-block;
+  opacity: 0;
+  animation: fadeUpLetter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes fadeUpLetter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) rotateX(45deg);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+    filter: blur(0);
+  }
 }
 
 .welcome-text::after {
-  content: '|';
-  display: inline-block;
-  margin-left: 5px;
-  animation: blink 1s step-end infinite;
-  color: #B4AC97;
-  font-weight: 300;
+  content: '';
+  display: none;
 }
 
 @keyframes blink {
@@ -1458,7 +1476,8 @@ body::-webkit-scrollbar,
 
 /* --- Buttons & Dropdown Functionality --- */
 button.theme-toggle,
-button.lang-toggle {
+button.lang-toggle,
+button.kanji-toggle {
   background: none;
   border: none;
   padding: 0;
@@ -1649,4 +1668,8 @@ body.light-mode .curved-arrow svg path {
 
 body.light-mode .arrow-head {
     fill: #000000;
+}
+
+body.light-mode .control-icon {
+    transform: scale(1.3);
 }
