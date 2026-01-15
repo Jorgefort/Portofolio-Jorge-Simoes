@@ -133,9 +133,9 @@ const Projects = ({ isVisible }) => {
     if (!container) return;
 
     const handleScroll = () => {
-      // Hide indicator when user scrolls
+      // Hide indicator when user scrolls deep
       const scrolledToBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 50;
-      setShowScrollIndicator(!scrolledToBottom && container.scrollTop < 50);
+      setShowScrollIndicator(!scrolledToBottom && container.scrollTop < 100);
     };
 
     // Check if content is scrollable
@@ -161,36 +161,38 @@ const Projects = ({ isVisible }) => {
         />
       </div>
 
-      <div className="projects-container" ref={containerRef}>
-        <div className="projects-list">
-          {projectsData.map((project) => (
-            <a 
-              key={project.id} 
-              href={project.link}
-              className="project-row"
-              onMouseEnter={() => setHoveredProject(project.id)}
-              onMouseLeave={() => setHoveredProject(null)}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className="project-col id">#{project.id}</div>
-              <div className="project-col name">{project.name}</div>
-              <div className="project-col tech">{project.tech}</div>
-              <div className="project-col year">{project.year}</div>
-            </a>
-          ))}
+      <div className="projects-content-wrapper">
+        <div className="projects-container" ref={containerRef}>
+          <div className="projects-list">
+            {projectsData.map((project) => (
+              <a 
+                key={project.id} 
+                href={project.link}
+                className="project-row"
+                onMouseEnter={() => setHoveredProject(project.id)}
+                onMouseLeave={() => setHoveredProject(null)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="project-col id">#{project.id}</div>
+                <div className="project-col name">{project.name}</div>
+                <div className="project-col tech">{project.tech}</div>
+                <div className="project-col year">{project.year}</div>
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Scroll Indicator - Fun Curved Arrow */}
-      <div className={`scroll-indicator ${!showScrollIndicator ? 'hidden' : ''}`}>
-        <div className="curved-arrow">
-          <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 50 30 Q 30 10, 15 30" />
-            <polygon className="arrow-head" points="15,25 10,30 15,35" />
-          </svg>
+        {/* Scroll Indicator - Bouncy Arrow */}
+        <div 
+          className={`scroll-indicator ${!showScrollIndicator ? 'hidden' : ''}`}
+        >
+          <div className="bouncy-arrow">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
         </div>
-        <span className="scroll-text">Scroll me!</span>
       </div>
     </div>
   );

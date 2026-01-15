@@ -12,6 +12,7 @@ const CircularNav = lazy(() => import('./CircularNav'));
 const Cube3D = lazy(() => import('./Cube3D'));
 const Projects = lazy(() => import('./Projects'));
 const About = lazy(() => import('./About'));
+const Contact = lazy(() => import('./Contact'));
 
 function IntroPage({ theme, toggleTheme }) { // Accept theme & toggleTheme prop
   const [welcomeText, setWelcomeText] = useState('');
@@ -91,8 +92,6 @@ function IntroPage({ theme, toggleTheme }) { // Accept theme & toggleTheme prop
                 {langDropdownOpen && (
                     <div className="lang-dropdown">
                         <a href="?lang=en" onClick={() => handleLangSelect('en')}>English</a>
-                        <a href="?lang=pt" onClick={() => handleLangSelect('pt')}>Português</a>
-                        <a href="?lang=es" onClick={() => handleLangSelect('es')}>Español</a>
                     </div>
                 )}
             </div>
@@ -131,6 +130,9 @@ function IntroPage({ theme, toggleTheme }) { // Accept theme & toggleTheme prop
 
           {/* About Content */}
           <About isVisible={currentPage === 'about' && !isTransitioning} />
+
+          {/* Contact Content */}
+          <Contact isVisible={currentPage === 'contact' && !isTransitioning} />
         </Suspense>
 
         {/* Navigation */}
