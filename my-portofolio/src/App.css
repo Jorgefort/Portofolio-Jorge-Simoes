@@ -635,9 +635,10 @@ body::-webkit-scrollbar,
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: flex-start; /* Align to left */
-  align-items: center;
-  padding-left: 15%; /* Add some spacing from left edge */
+  flex-direction: row;
+  justify-content: flex-start; /* Align left to be closer to archive */
+  align-items: flex-end;
+  /* padding-right: 5%; -- handled by container positioning now */
   opacity: 0;
   transition: opacity 0.5s ease;
   pointer-events: none;
@@ -649,8 +650,57 @@ body::-webkit-scrollbar,
   pointer-events: auto;
 }
 
+.archive-sidebar {
+  position: absolute;
+  left: 5%;
+  top: 10%;
+  width: 20%;
+  text-align: left;
+  animation: fadeIn 1s ease 0.5s forwards;
+  opacity: 0;
+}
+
+.archive-title {
+  font-family: 'Inter', sans-serif; /* Clean font like reference */
+  font-size: 60px;
+  font-weight: 500;
+  color: #B4AC97; /* Green/Gold theme color */
+  margin-bottom: 30px;
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+.archive-count {
+  font-size: 20px;
+  vertical-align: top;
+  margin-left: 5px;
+  font-weight: 600;
+}
+
+.archive-filters {
+  list-style: none;
+  padding: 0;
+}
+
+.archive-filter-item {
+  font-family: 'Zen Old Mincho', serif;
+  font-size: 14px;
+  color: #B4AC97;
+  margin-bottom: 12px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.archive-filter-item:hover {
+  opacity: 1;
+  transform: translateX(5px);
+}
+
 .projects-content-wrapper {
-  width: 75%;
+  width: 60%; /* Adjusted width to avoid overlap with nav */
+  margin-left: 27%; /* Closer to archive sidebar (5% + 20% + gap) */
+  margin-right: 0; 
   position: relative;
   display: flex;
   flex-direction: column;
@@ -660,7 +710,7 @@ body::-webkit-scrollbar,
 .projects-container {
   width: 100%;
   max-width: none;
-  max-height: 70vh; /* Scrollable viewport height */
+  max-height: 85vh; /* Scrollable viewport height */
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 20;
@@ -671,85 +721,66 @@ body::-webkit-scrollbar,
   position: relative;
 }
 
-.projects-container::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
-}
-
-.projects-list {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
 .project-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 20px; /* Tighter spacing between rows */
-  border-bottom: 1px solid rgba(180, 172, 151, 0.15);
+  padding: 24px 10px; /* Increased vertical spacing */
+  border-bottom: 1px solid rgba(180, 172, 151, 0.25);
   color: #B4AC97;
   text-decoration: none;
-  /* Optimized transitions - only animate transform and color for better performance */
-  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 0.3s, background-color 0.3s, border-color 0.3s, transform 0.3s;
   cursor: none !important;
   position: relative;
-  will-change: transform; /* Hint browser for GPU acceleration */
-}
-
-.project-row:first-child {
-  border-top: 1px solid rgba(180, 172, 151, 0.15);
+  will-change: transform;
 }
 
 .project-row:hover {
-  color: #ffffff;
-  /* Use transform instead of padding for better performance */
-  transform: translateX(15px);
-  background-color: rgba(180, 172, 151, 0.02); /* Very subtle highlight */
-  border-bottom: 1px solid rgba(180, 172, 151, 0.4);
+  transform: translateX(5px);
+  background-color: rgba(180, 172, 151, 0.02);
 }
 
 .project-col {
   flex: 1;
   font-family: 'Zen Old Mincho', serif;
-  font-size: 18px;
+  font-size: 13px; /* Tinier */
   letter-spacing: 0.5px;
 }
 
 .project-col.id {
-  flex: 0 0 8%;
-  font-family: 'Zen Old Mincho', serif; /* Cleaner look for numbers */
-  font-size: 16px;
+  flex: 0 0 5%; /* Smaller ID col */
+  font-family: 'Zen Old Mincho', serif; 
+  font-size: 12px;
   opacity: 0.7;
 }
 
 .project-col.name {
-  flex: 0 0 45%;
-  font-family: 'Literata', serif;
-  font-size: 24px; /* Adjusted for new font */
-  font-weight: 300;
-  letter-spacing: 1px;
+  flex: 0 0 50%; /* Wider name col */
+  font-family: 'Inter', sans-serif; /* Clean sans-serif for name like reference */
+  font-size: 18px; /* Slightly smaller but bold/clean */
+  font-weight: 500;
+  letter-spacing: 0.5px;
   line-height: 1.2;
-  text-transform: uppercase;
+  text-transform: none; /* Reference is not uppercase */
 }
 
 .project-col.tech {
   flex: 0 0 30%;
-  font-family: 'Zen Old Mincho', serif; /* Switch to serif for readability */
-  font-style: italic;
-  font-size: 16px;
-  opacity: 0.8;
-  text-transform: lowercase;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-size: 13px;
+  opacity: 0.9;
+  text-transform: capitalize;
+  text-align: right;
+  padding-right: 20px;
 }
 
 .project-col.year {
-  flex: 0 0 17%;
+  flex: 0 0 10%;
   text-align: right;
-  font-family: 'Zen Old Mincho', serif;
-  font-size: 16px;
-  opacity: 0.7;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  opacity: 0.9;
 }
 
 /* Background Image Layer */
@@ -778,35 +809,8 @@ body::-webkit-scrollbar,
   opacity: 0.2; /* Reduced opacity for subtler effect */
 }
 
-/* Scroll Indicator - Fun Curved Arrow */
-.scroll-indicator {
-  position: absolute;
-  bottom: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
-  z-index: 30;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 15px;
-  transition: opacity 0.4s ease;
-}
+/* Scroll Indicator - Removed */
 
-.scroll-indicator.hidden {
-  opacity: 0;
-}
-
-.scroll-text {
-  font-family: 'Literata', serif;
-  font-size: 18px;
-  color: #B4AC97;
-  letter-spacing: 1px;
-  font-style: italic;
-  font-weight: 300;
-  white-space: nowrap;
-  align-self: center;
-}
 
 .curved-arrow {
   width: 60px;

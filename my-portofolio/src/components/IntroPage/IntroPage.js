@@ -1,0 +1,149 @@
+
+import React, { useEffect, useState, lazy, Suspense } from 'react';
+import kanLeft from './assets/kanleft.png';
+import kanRight from './assets/kanright.png';
+import moonb from './assets/moonb.png';
+import whitesunb from './assets/whitesunb.png';
+import blackglobe from './assets/blackglobe.png';
+import whiteglobeb from './assets/whiteglobeb.png';
+
+// Lazy load heavy components
+const CircularNav = lazy(() => import('./CircularNav/CircularNav'));
+const Cube3D = lazy(() => import('./Cube3D/Cube3D'));
+const Archive = lazy(() => import('../Archive/Archive'));
+const About = lazy(() => import('../About/About'));
+const Contact = lazy(() => import('../Contact/Contact'));
+
+function IntroPage({ theme, toggleTheme }) { // Accept theme & toggleTheme prop
+  const [welcomeText, setWelcomeText] = useState('');
+  const [currentPage, setCurrentPage] = useState('home'); // 'home', 'archive', 'about', 'contact'
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+  const [kanjiEnabled, setKanjiEnabled] = useState(false);
+
+  useEffect(() => {
+    let timeoutId;
+
+    if (currentPage === 'home') {
+      // Wait 1 second before starting the animation
+      timeoutId = setTimeout(() => {
+        setWelcomeText(
+          <span className="welcome-letter">
+            Jorge Simoes
+          </span>
+        );
+      }, 1000);
+    } else {
+      setWelcomeText('');
+    }
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [currentPage]);
+
+  const handleNavigation = (page) => {
+    if (page === currentPage || isTransitioning) return;
+    
+    setIsTransitioning(true);
+    
+    // Fade out current content
+    setTimeout(() => {
+      setCurrentPage(page);
+      setIsTransitioning(false);
+    }, 500); // Match CSS transition duration
+  };
+
+  const toggleLangDropdown = () => {
+    setLangDropdownOpen(!langDropdownOpen);
+  };
+
+  const handleLangSelect = (lang) => {
+    window.location.reload(); 
+  };
+
+  const toggleKanji = () => {
+    setKanjiEnabled(!kanjiEnabled);
+  };
+
+  return (
+    <section className="intro-page">
+      <div className="home-page visible">
+        
+        {/* Kanji Background Layer - Hidden on Home (Cube) page, and toggled by user */}
+        <div className={`kanji-layer ${currentPage !== 'home' && kanjiEnabled ? 'visible' : ''}`}>
+          <img src={kanLeft} className="kanji-left" alt="" />
+          <img src={kanRight} className="kanji-right" alt="" />
+        </div>
+
+        {/* Dark Overlay - Visible when not on home page */}
+        <div className={`dark-overlay ${currentPage !== 'home' ? 'visible' : ''}`}></div>
+
+        {/* TOP CONTROLS - ONLY VISIBLE ON HOME */}
+        <div className={`top-controls ${currentPage === 'home' && !isTransitioning ? 'visible' : ''}`}>
+            <div className="lang-wrapper" style={{ position: 'relative' }}>
+                <button className="lang-toggle" onClick={toggleLangDropdown} aria-label="Select Language">
+                        <img 
+                            src={theme === 'dark' ? whiteglobeb : blackglobe} 
+                            alt="Language Selector" 
+                            className="control-icon"
+                        />
+                </button>
+                {langDropdownOpen && (
+                    <div className="lang-dropdown">
+                        <a href="?lang=en" onClick={() => handleLangSelect('en')}>English</a>
+                    </div>
+                )}
+            </div>
+
+            <button className="kanji-toggle" onClick={toggleKanji} aria-label="Toggle Kanji Background">
+                <span className="control-text-icon" style={{ 
+                    fontFamily: "'Zen Old Mincho', serif", 
+                    fontSize: '22px', 
+                    lineHeight: '24px',
+                    color: theme === 'dark' ? '#fff' : '#000',
+                    fontWeight: 'bold',
+                    opacity: kanjiEnabled ? 1 : 0.4
+                }}>
+                    字
+                </span>
+            </button>
+
+            <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle Theme">
+                    <img 
+                        src={theme === 'dark' ? whitesunb : moonb} 
+                        alt="Theme Toggle" 
+                        className="control-icon"
+                    />
+            </button>
+        </div>
+
+        {/* Home Content */}
+        <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+          <div className={`home-content ${currentPage === 'home' && !isTransitioning ? 'visible' : ''}`}>
+            <Cube3D theme={theme} /> 
+            <div className="welcome-text">{welcomeText}</div>
+          </div>
+
+          {/* Archive Content */}
+          <Archive isVisible={currentPage === 'archive' && !isTransitioning} />
+
+          {/* About Content */}
+          <About isVisible={currentPage === 'about' && !isTransitioning} />
+
+          {/* Contact Content */}
+          <Contact isVisible={currentPage === 'contact' && !isTransitioning} />
+        </Suspense>
+
+        {/* Navigation */}
+        <Suspense fallback={<div />}>
+          <div style={{ opacity: 1, transition: 'opacity 1s ease', pointerEvents: 'auto' }}>
+            <CircularNav onNavigate={handleNavigation} activePage={currentPage} theme={theme} />
+          </div>
+        </Suspense>
+      </div>
+    </section>
+  );
+}
+
+export default IntroPage;

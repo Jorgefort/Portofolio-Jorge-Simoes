@@ -2,9 +2,9 @@ import React, { useState, useEffect, lazy, Suspense } from 'react';
 import './App.css';
 
 // Lazy load components to reduce initial bundle size
-const Loading = lazy(() => import('./Loading'));
-const IntroPage = lazy(() => import('./IntroPage'));
-const CustomCursor = lazy(() => import('./CustomCursor'));
+const Loading = lazy(() => import('./components/Loading/Loading'));
+const IntroPage = lazy(() => import('./components/IntroPage/IntroPage'));
+const CustomCursor = lazy(() => import('./components/CustomCursor/CustomCursor'));
 
 function App() {
   // Check session storage to see if we've already shown the loading screen
